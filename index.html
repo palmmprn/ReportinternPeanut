@@ -5,19 +5,23 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>รายงานผลการฝึกงาน | Peeranut Intachai — Big C 2026</title>
 
-    <!-- Fonts: Playfair Display (display) + DM Sans (body) + Noto Sans Thai -->
+    <!-- ========================================== -->
+    <!-- 1. FONTS & ICONS -->
+    <!-- ========================================== -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,700;1,400;1,500&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,300&family=Noto+Sans+Thai:wght@300;400;500;600;700&family=DM+Mono:wght@300;400&display=swap" rel="stylesheet">
-
-    <!-- Phosphor Icons -->
     <script src="https://unpkg.com/@phosphor-icons/web@2.1.1/src/index.js"></script>
 
+    <!-- ========================================== -->
+    <!-- 2. STYLESHEET (CSS) -->
+    <!-- ========================================== -->
     <style>
-        /* ===== CSS RESET & BASE ===== */
+        /* --- CSS RESET & VARIABLES --- */
         *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
         :root {
+            /* Colors */
             --green: #00A651;
             --green-light: #00C462;
             --green-dim: rgba(0,166,81,0.12);
@@ -32,13 +36,15 @@
             --surface-2: #F0EFEb;
             --line: rgba(0,0,0,0.08);
             --line-2: rgba(0,0,0,0.12);
+            
+            /* Typography */
             --font-display: 'Playfair Display', 'Noto Sans Thai', Georgia, serif;
             --font-body: 'DM Sans', 'Noto Sans Thai', sans-serif;
             --font-mono: 'DM Mono', monospace;
+            
+            /* UI Enhancements */
             --ease-expo: cubic-bezier(0.16, 1, 0.3, 1);
             --ease-smooth: cubic-bezier(0.25, 0.46, 0.45, 0.94);
-            
-            /* New Soft UI Variables */
             --radius-sm: 8px;
             --radius-md: 16px;
             --radius-lg: 24px;
@@ -48,28 +54,17 @@
         }
 
         html { font-size: 16px; -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; }
-
-        body {
-            font-family: var(--font-body);
-            color: var(--ink);
-            background: var(--white);
-            overflow-x: hidden;
-        }
-
+        body { font-family: var(--font-body); color: var(--ink); background: var(--white); overflow-x: hidden; }
         ::selection { background: var(--green); color: var(--white); }
-
         img { display: block; max-width: 100%; }
         a { text-decoration: none; color: inherit; }
 
-        /* ===== SCROLL PROGRESS ===== */
+        /* --- UI COMPONENTS (Scrollbar, Cursor) --- */
         #scroll-bar {
             position: fixed; top: 0; left: 0; height: 3px;
             background: var(--green); z-index: 100;
             width: 0%; transition: width 0.1s linear;
-            border-top-right-radius: 3px; border-bottom-right-radius: 3px;
         }
-
-        /* ===== CURSOR DOT ===== */
         #cursor {
             position: fixed; width: 6px; height: 6px;
             background: var(--green); border-radius: 50%;
@@ -80,7 +75,7 @@
         }
         #cursor.grow { width: 40px; height: 40px; opacity: 0.18; }
 
-        /* ===== NAVBAR ===== */
+        /* --- NAVBAR --- */
         #nav {
             position: fixed; top: 0; left: 0; right: 0; z-index: 50;
             padding: 28px 0;
@@ -88,816 +83,290 @@
             border-bottom: 1px solid transparent;
         }
         #nav.scrolled {
-            padding: 16px 0;
-            background: rgba(255,255,255,0.96);
-            border-color: var(--line);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
+            padding: 16px 0; background: rgba(255,255,255,0.96);
+            border-color: var(--line); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
         }
         .nav-inner {
-            max-width: 1400px; margin: 0 auto;
-            padding: 0 48px;
+            max-width: 1400px; margin: 0 auto; padding: 0 48px;
             display: flex; align-items: center; justify-content: space-between;
         }
+        
+        /* 💡 แก้ไข CSS โลโก้: เอา filter: invert ออก และใส่ shadow ป้องกันโลโก้จม */
         .nav-logo img {
-            height: 32px; object-fit: contain;
-            filter: brightness(0) invert(1);
-            transition: filter 0.4s;
+            height: 36px; object-fit: contain;
+            transition: all 0.4s;
+            filter: drop-shadow(0 2px 6px rgba(0,0,0,0.4)); 
+            border-radius: 4px;
         }
         #nav.scrolled .nav-logo img { filter: none; }
 
-        .nav-links {
-            display: flex; gap: 40px; align-items: center;
-            list-style: none;
-        }
-        .nav-links a {
-            font-size: 14px; font-weight: 500; letter-spacing: 0.02em;
-            color: rgba(255,255,255,0.8);
-            transition: color 0.3s;
-        }
+        .nav-links { display: flex; gap: 40px; align-items: center; list-style: none; }
+        .nav-links a { font-size: 14px; font-weight: 500; letter-spacing: 0.02em; color: rgba(255,255,255,0.8); transition: color 0.3s; }
         .nav-links a:hover { color: white; }
         #nav.scrolled .nav-links a { color: var(--ink-3); }
         #nav.scrolled .nav-links a:hover { color: var(--green); }
 
         .nav-cta {
             font-size: 13px; font-weight: 600; letter-spacing: 0.06em;
-            text-transform: uppercase;
-            color: var(--white); background: var(--green);
-            padding: 12px 24px;
-            border-radius: var(--radius-pill);
+            text-transform: uppercase; color: var(--white); background: var(--green);
+            padding: 12px 24px; border-radius: var(--radius-pill);
             transition: all 0.3s var(--ease-smooth);
             box-shadow: 0 4px 14px rgba(0,166,81,0.2);
         }
         .nav-cta:hover { background: var(--green-light); transform: translateY(-2px); box-shadow: 0 6px 20px rgba(0,166,81,0.3); }
         #nav.scrolled .nav-cta { background: var(--green); color: white; }
 
-        /* ===== HERO ===== */
+        /* --- HERO SECTION --- */
         #hero {
-            min-height: 100svh;
-            position: relative; display: flex; flex-direction: column;
-            justify-content: flex-end; overflow: hidden;
+            min-height: 100svh; position: relative; display: flex;
+            flex-direction: column; justify-content: flex-end; overflow: hidden;
             background-color: #0c0c0c; 
         }
-        .hero-bg {
-            position: absolute; inset: 0;
-            background-color: #0c0c0c; 
-        }
+        .hero-bg { position: absolute; inset: 0; background-color: #0c0c0c; }
         .hero-bg img {
             width: 100%; height: 100%; object-fit: cover;
-            transform: scale(1.05);
+            transform: scale(1.05); opacity: 0.85;
             animation: hero-zoom 20s ease-out forwards;
-            opacity: 0.85; 
         }
-        @keyframes hero-zoom {
-            to { transform: scale(1); }
-        }
+        @keyframes hero-zoom { to { transform: scale(1); } }
         .hero-bg::after {
-            content: '';
-            position: absolute; inset: 0;
-            background: linear-gradient(
-                to bottom,
-                rgba(10,10,10,0.4) 0%,
-                rgba(10,10,10,0.2) 40%,
-                rgba(10,10,10,0.8) 75%,
-                rgba(10,10,10,0.95) 100%
-            );
+            content: ''; position: absolute; inset: 0;
+            background: linear-gradient(to bottom, rgba(10,10,10,0.4) 0%, rgba(10,10,10,0.2) 40%, rgba(10,10,10,0.8) 75%, rgba(10,10,10,0.95) 100%);
         }
 
         .hero-content {
-            position: relative; z-index: 2;
-            max-width: 1400px; margin: 0 auto;
-            padding: 0 48px 80px;
-            width: 100%;
+            position: relative; z-index: 2; max-width: 1400px;
+            margin: 0 auto; padding: 0 48px 80px; width: 100%;
         }
 
-        /* 💡 แก้ไข Animation: เอา opacity: 0; ออก แล้วไปคุมใน Keyframes แทน */
         .hero-eyebrow {
-            display: inline-flex; align-items: center; gap: 10px;
-            font-family: var(--font-mono);
-            font-size: 12px; font-weight: 500;
-            letter-spacing: 0.15em; text-transform: uppercase;
-            color: var(--green-light);
-            margin-bottom: 24px;
-            background: rgba(0,166,81,0.15);
-            padding: 6px 16px; border-radius: var(--radius-pill);
+            display: inline-flex; align-items: center; gap: 10px; font-family: var(--font-mono);
+            font-size: 12px; font-weight: 500; letter-spacing: 0.15em; text-transform: uppercase;
+            color: var(--green-light); margin-bottom: 24px;
+            background: rgba(0,166,81,0.15); padding: 6px 16px; border-radius: var(--radius-pill);
             backdrop-filter: blur(4px); border: 1px solid rgba(0,166,81,0.3);
-            /* รัน animation เลย */
             animation: fade-up 0.8s var(--ease-expo) 0.3s both;
         }
 
         .hero-title {
-            font-family: var(--font-display);
-            font-size: clamp(48px, 7vw, 104px);
-            font-weight: 500; line-height: 1.05;
-            color: white;
-            letter-spacing: -0.02em;
-            margin-bottom: 40px;
-            animation: fade-up 1s var(--ease-expo) 0.5s both;
+            font-family: var(--font-display); font-size: clamp(48px, 7vw, 104px);
+            font-weight: 500; line-height: 1.05; color: white; letter-spacing: -0.02em;
+            margin-bottom: 40px; animation: fade-up 1s var(--ease-expo) 0.5s both;
         }
         .hero-title em { font-style: italic; color: rgba(255,255,255,0.7); }
 
         .hero-meta {
-            display: flex; align-items: flex-end;
-            gap: 48px; flex-wrap: wrap;
+            display: flex; align-items: flex-end; gap: 48px; flex-wrap: wrap;
             animation: fade-up 0.9s var(--ease-expo) 0.8s both;
         }
         
         .hero-profile {
-            display: flex; align-items: center; gap: 16px;
-            background: rgba(255,255,255,0.05); padding: 12px 24px 12px 12px;
-            border-radius: var(--radius-pill); backdrop-filter: blur(10px);
+            display: flex; align-items: center; gap: 16px; background: rgba(255,255,255,0.05);
+            padding: 12px 24px 12px 12px; border-radius: var(--radius-pill); backdrop-filter: blur(10px);
             border: 1px solid rgba(255,255,255,0.1);
         }
         .hero-avatar {
-            width: 56px; height: 56px;
-            border-radius: 50%; overflow: hidden;
-            border: 2px solid var(--green-light);
-            flex-shrink: 0;
-            background-color: var(--ink-2);
+            width: 56px; height: 56px; border-radius: 50%; overflow: hidden;
+            border: 2px solid var(--green-light); flex-shrink: 0; background-color: var(--ink-2);
             display: flex; align-items: center; justify-content: center;
         }
         .hero-avatar img { width: 100%; height: 100%; object-fit: cover; }
-        .hero-name {
-            font-weight: 600; font-size: 15px;
-            color: white; margin-bottom: 2px;
-        }
-        .hero-role {
-            font-size: 12px; color: var(--green-light);
-            font-family: var(--font-mono); letter-spacing: 0.06em;
-        }
+        .hero-name { font-weight: 600; font-size: 15px; color: white; margin-bottom: 2px; }
+        .hero-role { font-size: 12px; color: var(--green-light); font-family: var(--font-mono); letter-spacing: 0.06em; }
 
-        .hero-divider {
-            width: 1px; height: 56px;
-            background: rgba(255,255,255,0.2);
-            flex-shrink: 0;
-        }
-
-        .hero-company {
-            font-size: 13px; color: rgba(255,255,255,0.6);
-            line-height: 1.8;
-        }
+        .hero-divider { width: 1px; height: 56px; background: rgba(255,255,255,0.2); flex-shrink: 0; }
+        .hero-company { font-size: 13px; color: rgba(255,255,255,0.6); line-height: 1.8; }
         .hero-company strong { color: white; font-weight: 500; font-size: 14px; display: block; margin-bottom: 4px; }
 
-        .hero-actions {
-            display: flex; gap: 16px; margin-left: auto;
-            align-items: center;
-        }
+        /* --- BUTTONS --- */
+        .hero-actions { display: flex; gap: 16px; margin-left: auto; align-items: center; flex-wrap: wrap; }
         .btn-primary {
-            display: inline-flex; align-items: center; gap: 10px;
-            background: var(--green); color: white;
-            padding: 16px 32px;
-            font-size: 14px; font-weight: 600;
-            border-radius: var(--radius-pill);
-            box-shadow: 0 8px 20px rgba(0,166,81,0.25);
-            transition: all 0.3s var(--ease-smooth);
-            cursor: pointer;
+            display: inline-flex; align-items: center; gap: 10px; background: var(--green); color: white;
+            padding: 16px 32px; font-size: 14px; font-weight: 600; border-radius: var(--radius-pill);
+            box-shadow: 0 8px 20px rgba(0,166,81,0.25); transition: all 0.3s var(--ease-smooth); cursor: pointer; border: 1px solid transparent;
         }
-        .btn-primary:hover {
-            background: var(--green-light);
-            transform: translateY(-3px); box-shadow: 0 12px 24px rgba(0,166,81,0.35);
+        .btn-primary:hover { background: var(--green-light); transform: translateY(-3px); box-shadow: 0 12px 24px rgba(0,166,81,0.35); }
+        
+        .btn-white {
+            display: inline-flex; align-items: center; gap: 10px; background: var(--white); color: var(--ink);
+            padding: 16px 32px; font-size: 14px; font-weight: 600; border-radius: var(--radius-pill);
+            box-shadow: 0 8px 20px rgba(255,255,255,0.15); transition: all 0.3s var(--ease-smooth); cursor: pointer; border: 1px solid var(--white);
         }
-        .btn-ghost {
-            display: inline-flex; align-items: center; gap: 10px;
-            background: rgba(255,255,255,0.05); color: white;
-            padding: 16px 32px;
-            font-size: 14px; font-weight: 500;
-            border-radius: var(--radius-pill); backdrop-filter: blur(8px);
-            border: 1px solid rgba(255,255,255,0.2);
-            transition: all 0.3s var(--ease-smooth);
-            cursor: pointer;
-        }
-        .btn-ghost:hover {
-            background: rgba(255,255,255,0.15);
-            transform: translateY(-2px);
-        }
+        .btn-white:hover { background: var(--surface-2); transform: translateY(-3px); box-shadow: 0 12px 24px rgba(255,255,255,0.25); }
 
-        /* Scroll indicator */
+        .btn-ghost {
+            display: inline-flex; align-items: center; gap: 10px; background: rgba(255,255,255,0.05); color: white;
+            padding: 16px 32px; font-size: 14px; font-weight: 500; border-radius: var(--radius-pill);
+            backdrop-filter: blur(8px); border: 1px solid rgba(255,255,255,0.2); transition: all 0.3s var(--ease-smooth); cursor: pointer;
+        }
+        .btn-ghost:hover { background: rgba(255,255,255,0.15); transform: translateY(-2px); }
+
         .hero-scroll {
-            position: absolute; bottom: 80px; right: 48px; z-index: 2;
-            display: flex; flex-direction: column; align-items: center; gap: 8px;
+            position: absolute; bottom: 80px; right: 48px; z-index: 2; display: flex; flex-direction: column; align-items: center; gap: 8px;
             animation: fade-in 1s var(--ease-expo) 1.5s both;
         }
-        .hero-scroll span {
-            font-size: 9px; letter-spacing: 0.18em; text-transform: uppercase;
-            color: rgba(255,255,255,0.5); font-family: var(--font-mono);
-            writing-mode: vertical-rl;
-        }
-        .scroll-line {
-            width: 2px; height: 48px; border-radius: 2px;
-            background: linear-gradient(to bottom, var(--green-light), transparent);
-            animation: scroll-pulse 2s ease-in-out infinite;
-        }
-        @keyframes scroll-pulse {
-            0%, 100% { opacity: 0.35; transform: scaleY(1); transform-origin: top; }
-            50% { opacity: 1; }
-        }
+        .hero-scroll span { font-size: 9px; letter-spacing: 0.18em; text-transform: uppercase; color: rgba(255,255,255,0.5); font-family: var(--font-mono); writing-mode: vertical-rl; }
+        .scroll-line { width: 2px; height: 48px; border-radius: 2px; background: linear-gradient(to bottom, var(--green-light), transparent); animation: scroll-pulse 2s ease-in-out infinite; }
+        @keyframes scroll-pulse { 0%, 100% { opacity: 0.35; transform: scaleY(1); transform-origin: top; } 50% { opacity: 1; } }
 
-        /* ===== SECTION BASE ===== */
-        .section {
-            padding: 140px 0;
-        }
-        .container {
-            max-width: 1400px;
-            margin: 0 auto;
-            padding: 0 48px;
-        }
-
-        /* ===== SECTION LABEL ===== */
-        .section-label {
-            display: flex; align-items: center; gap: 16px;
-            margin-bottom: 64px;
-            background: var(--surface-2); padding: 8px 24px; border-radius: var(--radius-pill);
-            width: max-content;
-        }
-        .section-num {
-            font-family: var(--font-mono);
-            font-size: 12px; font-weight: 500;
-            color: var(--green); letter-spacing: 0.1em;
-        }
+        /* --- LAYOUT & SECTIONS --- */
+        .section { padding: 140px 0; }
+        .container { max-width: 1400px; margin: 0 auto; padding: 0 48px; }
+        .section-label { display: flex; align-items: center; gap: 16px; margin-bottom: 64px; background: var(--surface-2); padding: 8px 24px; border-radius: var(--radius-pill); width: max-content; }
+        .section-num { font-family: var(--font-mono); font-size: 12px; font-weight: 500; color: var(--green); letter-spacing: 0.1em; }
         .section-line { width: 24px; height: 2px; background: var(--green-border); border-radius: 2px; }
-        .section-tag {
-            font-family: var(--font-mono);
-            font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase;
-            color: var(--ink-3); font-weight: 500;
-        }
+        .section-tag { font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--ink-3); font-weight: 500; }
 
-        /* ===== OVERVIEW ===== */
-        #overview { 
-            position: relative; 
-            background: url('./BG.jpg') no-repeat center center;
-            background-size: cover;
-            background-attachment: fixed;
-        }
-        #overview::before {
-            content:''; position: absolute; inset: 0;
-            background: rgba(255,255,255,0.92);
-            backdrop-filter: blur(5px);
-        }
-
-        .overview-grid {
-            display: grid;
-            grid-template-columns: 1fr 1.5fr;
-            gap: 100px; align-items: start; position: relative; z-index: 2;
-        }
-        .overview-heading {
-            font-family: var(--font-display);
-            font-size: clamp(36px, 4vw, 56px);
-            font-weight: 500; line-height: 1.15;
-            color: var(--ink);
-            letter-spacing: -0.02em;
-            margin-bottom: 24px;
-        }
+        /* --- OVERVIEW SECTION --- */
+        #overview { position: relative; background: url('./BG.jpg') no-repeat center center; background-size: cover; background-attachment: fixed; }
+        #overview::before { content:''; position: absolute; inset: 0; background: rgba(255,255,255,0.92); backdrop-filter: blur(5px); }
+        .overview-grid { display: grid; grid-template-columns: 1fr 1.5fr; gap: 100px; align-items: start; position: relative; z-index: 2; }
+        .overview-heading { font-family: var(--font-display); font-size: clamp(36px, 4vw, 56px); font-weight: 500; line-height: 1.15; color: var(--ink); letter-spacing: -0.02em; margin-bottom: 24px; }
         .overview-heading em { font-style: italic; color: var(--green); }
-        
-        .overview-date {
-            display: inline-flex; align-items: center;
-            font-family: var(--font-body); font-weight: 500;
-            font-size: 14px; color: var(--green);
-            background: var(--white);
-            padding: 12px 24px;
-            border-radius: var(--radius-pill);
-            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
-            margin-bottom: 48px;
-        }
-
+        .overview-date { display: inline-flex; align-items: center; font-family: var(--font-body); font-weight: 500; font-size: 14px; color: var(--green); background: var(--white); padding: 12px 24px; border-radius: var(--radius-pill); box-shadow: 0 4px 12px rgba(0,0,0,0.05); margin-bottom: 48px; }
         .overview-sticky { position: sticky; top: 120px; }
-
-        .overview-body p {
-            font-size: 17px; font-weight: 300;
-            line-height: 1.85; color: var(--ink-2);
-            margin-bottom: 24px;
-        }
-        
-        .learnings-list {
-            margin-top: 48px;
-            display: grid; gap: 24px;
-        }
-        .learning-item {
-            background: var(--white);
-            padding: 32px;
-            border-radius: var(--radius-lg);
-            box-shadow: var(--shadow-soft);
-            border-left: 4px solid var(--green);
-            transition: transform 0.3s, box-shadow 0.3s;
-        }
-        .learning-item:hover {
-            transform: translateY(-4px); box-shadow: var(--shadow-hover);
-        }
-        .learning-item h4 {
-            font-size: 17px; font-weight: 600; color: var(--ink); margin-bottom: 12px;
-            display: flex; align-items: center; gap: 10px;
-        }
+        .overview-body p { font-size: 17px; font-weight: 300; line-height: 1.85; color: var(--ink-2); margin-bottom: 24px; }
+        .learnings-list { margin-top: 48px; display: grid; gap: 24px; }
+        .learning-item { background: var(--white); padding: 32px; border-radius: var(--radius-lg); box-shadow: var(--shadow-soft); border-left: 4px solid var(--green); transition: transform 0.3s, box-shadow 0.3s; }
+        .learning-item:hover { transform: translateY(-4px); box-shadow: var(--shadow-hover); }
+        .learning-item h4 { font-size: 17px; font-weight: 600; color: var(--ink); margin-bottom: 12px; display: flex; align-items: center; gap: 10px; }
         .learning-item h4 i { color: var(--green); font-size: 24px; padding: 8px; background: var(--green-dim); border-radius: 50%; }
-        .learning-item p {
-            font-size: 15px; margin-bottom: 0; color: var(--ink-3); line-height: 1.7;
-        }
+        .learning-item p { font-size: 15px; margin-bottom: 0; color: var(--ink-3); line-height: 1.7; }
+        .stats-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+        .stat-item { background: var(--white); padding: 32px 24px; text-align: center; border-radius: var(--radius-lg); box-shadow: var(--shadow-soft); }
+        .stat-num { font-family: var(--font-display); font-size: 48px; font-weight: 500; color: var(--green); line-height: 1; margin-bottom: 8px; }
+        .stat-num sub { font-size: 16px; vertical-align: baseline; font-family: var(--font-body); color: var(--ink-3); }
+        .stat-label { font-size: 13px; color: var(--ink-2); font-weight: 500; }
 
-        /* Stats */
-        .stats-row {
-            display: grid; grid-template-columns: repeat(3, 1fr);
-            gap: 16px;
-        }
-        .stat-item {
-            background: var(--white);
-            padding: 32px 24px; text-align: center;
-            border-radius: var(--radius-lg);
-            box-shadow: var(--shadow-soft);
-        }
-        .stat-num {
-            font-family: var(--font-display);
-            font-size: 48px; font-weight: 500;
-            color: var(--green); line-height: 1;
-            margin-bottom: 8px;
-        }
-        .stat-num sub {
-            font-size: 16px; vertical-align: baseline;
-            font-family: var(--font-body); color: var(--ink-3);
-        }
-        .stat-label {
-            font-size: 13px; color: var(--ink-2); font-weight: 500;
-        }
-
-        /* ===== RESPONSIBILITIES ===== */
+        /* --- RESPONSIBILITIES SECTION --- */
         #responsibilities { background: var(--white); }
-
-        .resp-header {
-            display: grid; grid-template-columns: 1fr 1fr;
-            gap: 80px; align-items: end;
-            margin-bottom: 64px;
-        }
-        .resp-title {
-            font-family: var(--font-display);
-            font-size: clamp(36px, 4vw, 56px);
-            font-weight: 500; line-height: 1.1;
-            letter-spacing: -0.02em;
-        }
-        .resp-desc {
-            font-size: 16px; font-weight: 300;
-            color: var(--ink-3); line-height: 1.7;
-            max-width: 480px; background: var(--surface);
-            padding: 24px; border-radius: var(--radius-md);
-        }
-
+        .resp-header { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: end; margin-bottom: 64px; }
+        .resp-title { font-family: var(--font-display); font-size: clamp(36px, 4vw, 56px); font-weight: 500; line-height: 1.1; letter-spacing: -0.02em; }
+        .resp-desc { font-size: 16px; font-weight: 300; color: var(--ink-3); line-height: 1.7; max-width: 480px; background: var(--surface); padding: 24px; border-radius: var(--radius-md); }
         .resp-list { display: grid; gap: 24px; }
-        .resp-item {
-            display: grid;
-            grid-template-columns: 80px 1fr 2fr;
-            gap: 24px; align-items: center;
-            background: var(--surface);
-            padding: 40px; border-radius: var(--radius-lg);
-            transition: all 0.3s;
-            cursor: default; border: 1px solid transparent;
-        }
-        .resp-item:hover { 
-            background: var(--white); box-shadow: var(--shadow-hover);
-            border-color: var(--green-border); transform: translateX(8px);
-        }
+        .resp-item { display: grid; grid-template-columns: 80px 1fr 2fr; gap: 24px; align-items: center; background: var(--surface); padding: 40px; border-radius: var(--radius-lg); transition: all 0.3s; cursor: default; border: 1px solid transparent; }
+        .resp-item:hover { background: var(--white); box-shadow: var(--shadow-hover); border-color: var(--green-border); transform: translateX(8px); }
+        .resp-index { font-family: var(--font-mono); font-size: 14px; font-weight: 600; color: var(--green); background: var(--green-dim); width: 48px; height: 48px; display: flex; align-items: center; justify-content: center; border-radius: 50%; }
+        .resp-name { font-family: var(--font-display); font-size: 24px; font-weight: 600; color: var(--ink); line-height: 1.3; }
+        .resp-detail { font-size: 15px; font-weight: 300; color: var(--ink-3); line-height: 1.75; }
 
-        .resp-index {
-            font-family: var(--font-mono);
-            font-size: 14px; font-weight: 600; color: var(--green);
-            background: var(--green-dim); width: 48px; height: 48px;
-            display: flex; align-items: center; justify-content: center;
-            border-radius: 50%;
-        }
-        .resp-name {
-            font-family: var(--font-display);
-            font-size: 24px; font-weight: 600;
-            color: var(--ink); line-height: 1.3;
-        }
-        .resp-detail {
-            font-size: 15px; font-weight: 300;
-            color: var(--ink-3); line-height: 1.75;
-        }
-
-        /* ===== PROJECTS ===== */
+        /* --- PROJECTS SECTION --- */
         #projects { background: var(--black); border-radius: 40px; margin: 0 24px; padding: 100px 0; }
-
         #projects .section-label { background: rgba(255,255,255,0.05); }
         #projects .section-num { color: var(--green-light); }
         #projects .section-tag { color: rgba(255,255,255,0.6); }
-
-        .project-eyebrow {
-            display: inline-block; background: rgba(0,196,98,0.15);
-            padding: 6px 16px; border-radius: var(--radius-pill);
-            font-family: var(--font-mono);
-            font-size: 11px; letter-spacing: 0.12em;
-            text-transform: uppercase;
-            color: var(--green-light); margin-bottom: 24px;
-        }
-
-        .project-title {
-            font-family: var(--font-display);
-            font-size: clamp(42px, 5vw, 64px);
-            font-weight: 500; line-height: 1.1;
-            color: white; letter-spacing: -0.02em;
-            margin-bottom: 0;
-        }
+        .project-eyebrow { display: inline-block; background: rgba(0,196,98,0.15); padding: 6px 16px; border-radius: var(--radius-pill); font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--green-light); margin-bottom: 24px; }
+        .project-title { font-family: var(--font-display); font-size: clamp(42px, 5vw, 64px); font-weight: 500; line-height: 1.1; color: white; letter-spacing: -0.02em; margin-bottom: 0; }
         .project-title em { font-style: italic; color: var(--green-light); }
-
-        .project-layout {
-            display: grid;
-            grid-template-columns: 1fr 1.2fr;
-            gap: 80px; align-items: start;
-            margin-top: 64px;
-        }
-
-        .project-info {}
-        .project-desc {
-            font-size: 16px; font-weight: 300;
-            color: rgba(255,255,255,0.7);
-            line-height: 1.85; margin-bottom: 40px;
-        }
-
-        .feature-box {
-            background: rgba(255,255,255,0.03);
-            border: 1px solid rgba(255,255,255,0.08);
-            padding: 32px; border-radius: var(--radius-lg);
-            margin-bottom: 24px; transition: background 0.3s;
-        }
+        .project-layout { display: grid; grid-template-columns: 1fr 1.2fr; gap: 80px; align-items: start; margin-top: 64px; }
+        .project-desc { font-size: 16px; font-weight: 300; color: rgba(255,255,255,0.7); line-height: 1.85; margin-bottom: 40px; }
+        .feature-box { background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08); padding: 32px; border-radius: var(--radius-lg); margin-bottom: 24px; transition: background 0.3s; }
         .feature-box:hover { background: rgba(255,255,255,0.05); border-color: rgba(255,255,255,0.15); }
-        .feature-box h4 {
-            color: white; font-size: 18px; font-weight: 500; margin-bottom: 20px;
-            display: flex; align-items: center; gap: 12px;
-        }
+        .feature-box h4 { color: white; font-size: 18px; font-weight: 500; margin-bottom: 20px; display: flex; align-items: center; gap: 12px; }
         .feature-box h4 i { color: var(--green-light); font-size: 24px; padding: 8px; background: rgba(0,196,98,0.15); border-radius: 50%; }
-        .feature-list {
-            list-style: none;
-            display: flex; flex-direction: column; gap: 14px;
-        }
-        .feature-list li {
-            font-size: 14px; color: rgba(255,255,255,0.6);
-            display: flex; align-items: flex-start; gap: 12px; line-height: 1.6;
-        }
-        .feature-list li::before {
-            content: '\2022'; color: var(--green-light); font-size: 18px; line-height: 1;
-        }
+        .feature-list { list-style: none; display: flex; flex-direction: column; gap: 14px; }
+        .feature-list li { font-size: 14px; color: rgba(255,255,255,0.6); display: flex; align-items: flex-start; gap: 12px; line-height: 1.6; }
+        .feature-list li::before { content: '\2022'; color: var(--green-light); font-size: 18px; line-height: 1; }
         .feature-list strong { color: white; font-weight: 500; }
-
-        /* Project UI Grid (Images) */
-        .ui-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 20px;
-        }
-        .ui-item {
-            position: relative; overflow: hidden;
-            background: #111; border-radius: var(--radius-md);
-            border: 1px solid rgba(255,255,255,0.08);
-            cursor: zoom-in;
-            aspect-ratio: 16/10;
-        }
-        .ui-item.full-width { grid-column: 1 / -1; aspect-ratio: 16/9; }
         
-        .ui-item img {
-            width: 100%; height: 100%; object-fit: cover; object-position: top;
-            transition: transform 0.8s var(--ease-expo), opacity 0.4s;
-        }
+        .ui-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+        .ui-item { position: relative; overflow: hidden; background: #111; border-radius: var(--radius-md); border: 1px solid rgba(255,255,255,0.08); cursor: zoom-in; aspect-ratio: 16/10; }
+        .ui-item.full-width { grid-column: 1 / -1; aspect-ratio: 16/9; }
+        .ui-item img { width: 100%; height: 100%; object-fit: cover; object-position: top; transition: transform 0.8s var(--ease-expo), opacity 0.4s; }
         .ui-item:hover img { transform: scale(1.03); opacity: 0.8; }
-        .img-hint {
-            position: absolute; bottom: 16px; left: 16px;
-            background: rgba(0,0,0,0.6); backdrop-filter: blur(12px);
-            color: white; border-radius: var(--radius-pill);
-            font-size: 11px; font-family: var(--font-body); font-weight: 500;
-            padding: 8px 16px;
-            border: 1px solid rgba(255,255,255,0.1);
-            display: flex; align-items: center; gap: 6px;
-            pointer-events: none;
-        }
-
-        /* Tech stack marquee */
-        .tech-header {
-            font-family: var(--font-mono); font-weight: 500;
-            font-size: 11px; letter-spacing: 0.14em;
-            text-transform: uppercase; text-align: center;
-            color: rgba(255,255,255,0.4); margin-bottom: 24px;
-            margin-top: 80px;
-        }
-        .marquee-wrap {
-            position: relative; overflow: hidden;
-            -webkit-mask-image: linear-gradient(to right, transparent, black 8%, black 92%, transparent);
-            mask-image: linear-gradient(to right, transparent, black 8%, black 92%, transparent);
-        }
-        .marquee-track {
-            display: flex; gap: 24px;
-            width: max-content;
-            animation: marquee 20s linear infinite;
-        }
+        .img-hint { position: absolute; bottom: 16px; left: 16px; background: rgba(0,0,0,0.6); backdrop-filter: blur(12px); color: white; border-radius: var(--radius-pill); font-size: 11px; font-family: var(--font-body); font-weight: 500; padding: 8px 16px; border: 1px solid rgba(255,255,255,0.1); display: flex; align-items: center; gap: 6px; pointer-events: none; }
+        
+        .tech-header { font-family: var(--font-mono); font-weight: 500; font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; text-align: center; color: rgba(255,255,255,0.4); margin-bottom: 24px; margin-top: 80px; }
+        .marquee-wrap { position: relative; overflow: hidden; -webkit-mask-image: linear-gradient(to right, transparent, black 8%, black 92%, transparent); mask-image: linear-gradient(to right, transparent, black 8%, black 92%, transparent); }
+        .marquee-track { display: flex; gap: 24px; width: max-content; animation: marquee 20s linear infinite; }
         .marquee-track:hover { animation-play-state: paused; }
-        @keyframes marquee {
-            0% { transform: translateX(0); }
-            100% { transform: translateX(-50%); }
-        }
-        .tech-tag {
-            display: flex; align-items: center; gap: 10px;
-            font-size: 14px; font-weight: 500;
-            color: rgba(255,255,255,0.7);
-            white-space: nowrap; background: rgba(255,255,255,0.05);
-            padding: 12px 24px;
-            border: 1px solid rgba(255,255,255,0.1);
-            border-radius: var(--radius-pill);
-            transition: all 0.3s;
-        }
+        @keyframes marquee { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
+        .tech-tag { display: flex; align-items: center; gap: 10px; font-size: 14px; font-weight: 500; color: rgba(255,255,255,0.7); white-space: nowrap; background: rgba(255,255,255,0.05); padding: 12px 24px; border: 1px solid rgba(255,255,255,0.1); border-radius: var(--radius-pill); transition: all 0.3s; }
         .tech-tag:hover { color: white; background: var(--green); border-color: var(--green); }
 
-        /* ===== ACTIVITIES & GALLERY ===== */
-        #activities {
-            background: var(--surface);
-            padding-top: 100px; padding-bottom: 160px;
-        }
+        /* --- ACTIVITIES & GALLERY SECTION --- */
+        #activities { background: var(--surface); padding-top: 100px; padding-bottom: 160px; }
         .activity-group { margin-bottom: 80px; }
-        .activity-header {
-            display: flex; justify-content: space-between; align-items: flex-end;
-            margin-bottom: 40px;
-            padding: 0 48px;
-            max-width: 1400px; margin-left: auto; margin-right: auto;
-        }
-        .activity-title {
-            font-size: 28px; font-weight: 600; color: var(--ink);
-            display: flex; align-items: center; gap: 12px;
-        }
+        .activity-header { display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 40px; padding: 0 48px; max-width: 1400px; margin-left: auto; margin-right: auto; }
+        .activity-title { font-size: 28px; font-weight: 600; color: var(--ink); display: flex; align-items: center; gap: 12px; }
         .activity-title i { color: var(--white); background: var(--green); padding: 8px; border-radius: 50%; font-size: 24px; }
-        .activity-subtitle {
-            font-size: 15px; color: var(--ink-3); font-weight: 300; margin-top: 12px; line-height: 1.6;
-        }
-
-        /* Horizontal Scroll Gallery */
-        .gallery-container {
-            width: 100%;
-            overflow-x: auto;
-            scroll-snap-type: x mandatory;
-            scrollbar-width: none; /* Firefox */
-            padding: 0 48px 40px;
-        }
+        .activity-subtitle { font-size: 15px; color: var(--ink-3); font-weight: 300; margin-top: 12px; line-height: 1.6; }
+        .gallery-container { width: 100%; overflow-x: auto; scroll-snap-type: x mandatory; scrollbar-width: none; padding: 0 48px 40px; }
         .gallery-container::-webkit-scrollbar { display: none; }
-        .gallery-track {
-            display: flex; gap: 24px;
-            width: max-content; padding-bottom: 16px;
-        }
-        .gallery-item {
-            width: 420px; aspect-ratio: 4/3;
-            scroll-snap-align: start; border-radius: var(--radius-lg);
-            background: var(--white); box-shadow: var(--shadow-soft);
-            border: 1px solid var(--line);
-            position: relative; overflow: hidden;
-            cursor: zoom-in;
-        }
-        .gallery-item img {
-            width: 100%; height: 100%; object-fit: cover;
-            transition: transform 0.6s var(--ease-expo);
-        }
+        .gallery-track { display: flex; gap: 24px; width: max-content; padding-bottom: 16px; }
+        .gallery-item { width: 420px; aspect-ratio: 4/3; scroll-snap-align: start; border-radius: var(--radius-lg); background: var(--white); box-shadow: var(--shadow-soft); border: 1px solid var(--line); position: relative; overflow: hidden; cursor: zoom-in; }
+        .gallery-item img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.6s var(--ease-expo); }
         .gallery-item:hover img { transform: scale(1.05); }
         .gallery-item .img-hint { background: white; color: var(--ink); border: none; box-shadow: 0 4px 12px rgba(0,0,0,0.1); }
-        
-        /* Document Cards */
-        .doc-card {
-            display: flex; flex-direction: column; width: 320px;
-            background: var(--white); border-radius: var(--radius-lg);
-            border: 1px solid var(--line-2); box-shadow: var(--shadow-soft);
-            padding: 32px;
-            scroll-snap-align: start;
-            transition: all 0.3s;
-        }
+        .doc-card { display: flex; flex-direction: column; width: 320px; background: var(--white); border-radius: var(--radius-lg); border: 1px solid var(--line-2); box-shadow: var(--shadow-soft); padding: 32px; scroll-snap-align: start; transition: all 0.3s; }
         .doc-card:hover { border-color: var(--green); transform: translateY(-6px); box-shadow: var(--shadow-hover); }
-        .doc-icon {
-            width: 56px; height: 56px; background: var(--green-dim);
-            display: flex; align-items: center; justify-content: center;
-            border-radius: 50%; font-size: 28px; color: var(--green);
-            margin-bottom: 24px;
-        }
+        .doc-icon { width: 56px; height: 56px; background: var(--green-dim); display: flex; align-items: center; justify-content: center; border-radius: 50%; font-size: 28px; color: var(--green); margin-bottom: 24px; }
         .doc-card h4 { font-size: 18px; font-weight: 600; color: var(--ink); margin-bottom: 8px; line-height: 1.4; }
         .doc-card p { font-size: 14px; color: var(--ink-3); margin-bottom: 24px; flex-grow: 1; }
         .doc-link-text { font-size: 13px; font-weight: 600; color: var(--green); display: flex; align-items: center; gap: 6px; }
 
-        /* ===== MENTORS ===== */
+        /* --- MENTORS SECTION --- */
         #mentors { background: var(--white); }
-
-        .mentors-title {
-            font-family: var(--font-display);
-            font-size: clamp(36px, 4vw, 56px);
-            font-weight: 500; line-height: 1.1;
-            letter-spacing: -0.02em;
-            margin-bottom: 64px; text-align: center;
-        }
-
-        .mentors-group-label {
-            font-family: var(--font-body); font-weight: 600;
-            font-size: 18px; color: var(--ink); margin-bottom: 32px;
-            display: flex; align-items: center; gap: 16px; justify-content: center;
-        }
-        .mentors-group-label::before, .mentors-group-label::after {
-            content: ''; width: 60px; height: 2px; background: var(--line-2); border-radius: 2px;
-        }
-
-        .mentors-grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 24px; margin-bottom: 64px;
-        }
-        .mentor-card {
-            background: var(--surface); border-radius: var(--radius-lg);
-            padding: 40px; border: 1px solid var(--line);
-            display: flex; gap: 32px; align-items: center;
-            transition: all 0.3s; box-shadow: var(--shadow-soft);
-        }
+        .mentors-title { font-family: var(--font-display); font-size: clamp(36px, 4vw, 56px); font-weight: 500; line-height: 1.1; letter-spacing: -0.02em; margin-bottom: 64px; text-align: center; }
+        .mentors-group-label { font-family: var(--font-body); font-weight: 600; font-size: 18px; color: var(--ink); margin-bottom: 32px; display: flex; align-items: center; gap: 16px; justify-content: center; }
+        .mentors-group-label::before, .mentors-group-label::after { content: ''; width: 60px; height: 2px; background: var(--line-2); border-radius: 2px; }
+        .mentors-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 24px; margin-bottom: 64px; }
+        .mentor-card { background: var(--surface); border-radius: var(--radius-lg); padding: 40px; border: 1px solid var(--line); display: flex; gap: 32px; align-items: center; transition: all 0.3s; box-shadow: var(--shadow-soft); }
         .mentor-card:hover { background: var(--white); transform: translateY(-4px); box-shadow: var(--shadow-hover); border-color: var(--green-border); }
-
-        .mentor-photo {
-            width: 100px; height: 100px; flex-shrink: 0;
-            border-radius: 50%; overflow: hidden;
-            background: var(--surface-2);
-            border: 4px solid var(--white); box-shadow: 0 4px 12px rgba(0,0,0,0.08);
-        }
+        .mentor-photo { width: 100px; height: 100px; flex-shrink: 0; border-radius: 50%; overflow: hidden; background: var(--surface-2); border: 4px solid var(--white); box-shadow: 0 4px 12px rgba(0,0,0,0.08); }
         .mentor-photo img { width: 100%; height: 100%; object-fit: cover; object-position: top; }
-
-        .mentor-badge {
-            display: inline-block;
-            font-family: var(--font-mono); font-weight: 500;
-            font-size: 10px; letter-spacing: 0.1em;
-            text-transform: uppercase;
-            padding: 6px 12px; border-radius: var(--radius-pill);
-            background: rgba(0,0,0,0.05); color: var(--ink-3);
-            margin-bottom: 12px;
-        }
-        .mentor-badge.company {
-            color: var(--green); background: var(--green-dim);
-        }
-
-        .mentor-name {
-            font-size: 20px; font-weight: 600;
-            color: var(--ink); margin-bottom: 4px;
-            line-height: 1.3;
-        }
-        .mentor-en-name {
-            font-size: 13px; color: var(--ink-4);
-            font-family: var(--font-body); margin-bottom: 12px;
-        }
-        .mentor-dept {
-            font-size: 14px; font-weight: 300;
-            color: var(--ink-3); line-height: 1.6;
-            margin-bottom: 12px;
-        }
-        .mentor-contact a {
-            display: inline-flex; align-items: center; gap: 6px;
-            font-size: 13px; color: var(--ink-3); font-weight: 500;
-            background: var(--white); padding: 6px 12px; border-radius: var(--radius-pill); border: 1px solid var(--line);
-            transition: all 0.2s; margin-right: 8px; margin-bottom: 8px;
-        }
+        .mentor-badge { display: inline-block; font-family: var(--font-mono); font-weight: 500; font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase; padding: 6px 12px; border-radius: var(--radius-pill); background: rgba(0,0,0,0.05); color: var(--ink-3); margin-bottom: 12px; }
+        .mentor-badge.company { color: var(--green); background: var(--green-dim); }
+        .mentor-name { font-size: 20px; font-weight: 600; color: var(--ink); margin-bottom: 4px; line-height: 1.3; }
+        .mentor-en-name { font-size: 13px; color: var(--ink-4); font-family: var(--font-body); margin-bottom: 12px; }
+        .mentor-dept { font-size: 14px; font-weight: 300; color: var(--ink-3); line-height: 1.6; margin-bottom: 12px; }
+        .mentor-contact a { display: inline-flex; align-items: center; gap: 6px; font-size: 13px; color: var(--ink-3); font-weight: 500; background: var(--white); padding: 6px 12px; border-radius: var(--radius-pill); border: 1px solid var(--line); transition: all 0.2s; margin-right: 8px; margin-bottom: 8px; }
         .mentor-contact a:hover { color: var(--green); border-color: var(--green); background: var(--green-dim); }
 
-        /* ===== FOOTER / CONTACT ===== */
-        #contact {
-            background: var(--black);
-            padding: 128px 0 64px; border-top-left-radius: 40px; border-top-right-radius: 40px;
-        }
-
-        .contact-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 80px; align-items: start;
-            padding-bottom: 96px;
-            border-bottom: 1px solid rgba(255,255,255,0.08);
-            margin-bottom: 64px;
-        }
-
-        .contact-title {
-            font-family: var(--font-display);
-            font-size: clamp(48px, 5vw, 80px);
-            font-weight: 500; line-height: 1.0;
-            color: white; letter-spacing: -0.02em;
-            margin-bottom: 40px;
-        }
+        /* --- CONTACT & FOOTER --- */
+        #contact { background: var(--black); padding: 128px 0 64px; border-top-left-radius: 40px; border-top-right-radius: 40px; }
+        .contact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: start; padding-bottom: 96px; border-bottom: 1px solid rgba(255,255,255,0.08); margin-bottom: 64px; }
+        .contact-title { font-family: var(--font-display); font-size: clamp(48px, 5vw, 80px); font-weight: 500; line-height: 1.0; color: white; letter-spacing: -0.02em; margin-bottom: 40px; }
         .contact-title em { font-style: italic; color: var(--green-light); }
-
-        .contact-info {
-            display: flex; flex-direction: column; gap: 20px;
-            background: rgba(255,255,255,0.03); padding: 40px; border-radius: var(--radius-lg); border: 1px solid rgba(255,255,255,0.05);
-        }
-        .contact-row {
-            display: flex; gap: 24px; align-items: baseline;
-        }
-        .contact-field {
-            font-family: var(--font-mono);
-            font-size: 11px; letter-spacing: 0.12em;
-            text-transform: uppercase;
-            color: rgba(255,255,255,0.4);
-            min-width: 64px; flex-shrink: 0;
-        }
-        .contact-val {
-            font-size: 15px; color: rgba(255,255,255,0.7);
-            font-weight: 400; transition: color 0.3s; line-height: 1.6;
-        }
+        .contact-info { display: flex; flex-direction: column; gap: 20px; background: rgba(255,255,255,0.03); padding: 40px; border-radius: var(--radius-lg); border: 1px solid rgba(255,255,255,0.05); }
+        .contact-row { display: flex; gap: 24px; align-items: baseline; }
+        .contact-field { font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; color: rgba(255,255,255,0.4); min-width: 64px; flex-shrink: 0; }
+        .contact-val { font-size: 15px; color: rgba(255,255,255,0.7); font-weight: 400; transition: color 0.3s; line-height: 1.6; }
         .contact-val a { color: inherit; border-bottom: 1px solid rgba(255,255,255,0.2); padding-bottom: 2px; transition: all 0.3s; }
         .contact-val a:hover { color: white; border-color: var(--green-light); }
         .contact-val.highlight { color: white; font-weight: 500; font-size: 18px; border: none; }
+        .contact-social { display: flex; flex-direction: column; justify-content: flex-end; align-items: flex-end; height: 100%; }
+        .social-links { display: flex; gap: 16px; margin-bottom: 40px; }
+        .social-link { width: 56px; height: 56px; border-radius: 50%; background: rgba(255,255,255,0.05); display: flex; align-items: center; justify-content: center; color: white; font-size: 24px; transition: all 0.3s; border: 1px solid rgba(255,255,255,0.1); }
+        .social-link:hover { background: var(--green); transform: translateY(-4px); border-color: var(--green); box-shadow: 0 10px 20px rgba(0,166,81,0.3); }
+        .footer-bottom { display: flex; justify-content: space-between; align-items: center; }
+        .footer-copy { font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; color: rgba(255,255,255,0.3); line-height: 1.8; }
+        .footer-badge { display: flex; align-items: center; gap: 16px; background: rgba(255,255,255,0.05); padding: 12px 24px; border-radius: var(--radius-pill); }
+        .footer-badge img { height: 24px; object-fit: contain; filter: brightness(0) invert(1); opacity: 0.5; }
+        .footer-badge span { font-family: var(--font-mono); font-weight: 500; font-size: 11px; letter-spacing: 0.1em; color: rgba(255,255,255,0.4); }
 
-        .contact-social {
-            display: flex; flex-direction: column; justify-content: flex-end;
-            align-items: flex-end; height: 100%;
-        }
-        .social-links {
-            display: flex; gap: 16px; margin-bottom: 40px;
-        }
-        .social-link {
-            width: 56px; height: 56px; border-radius: 50%;
-            background: rgba(255,255,255,0.05);
-            display: flex; align-items: center; justify-content: center;
-            color: white; font-size: 24px;
-            transition: all 0.3s; border: 1px solid rgba(255,255,255,0.1);
-        }
-        .social-link:hover {
-            background: var(--green); transform: translateY(-4px); border-color: var(--green); box-shadow: 0 10px 20px rgba(0,166,81,0.3);
-        }
-
-        .footer-bottom {
-            display: flex; justify-content: space-between; align-items: center;
-        }
-        .footer-copy {
-            font-family: var(--font-mono);
-            font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase;
-            color: rgba(255,255,255,0.3);
-            line-height: 1.8;
-        }
-
-        /* Big C badge in footer */
-        .footer-badge {
-            display: flex; align-items: center; gap: 16px;
-            background: rgba(255,255,255,0.05); padding: 12px 24px; border-radius: var(--radius-pill);
-        }
-        .footer-badge img {
-            height: 24px; object-fit: contain;
-            filter: brightness(0) invert(1); opacity: 0.5;
-        }
-        .footer-badge span {
-            font-family: var(--font-mono); font-weight: 500;
-            font-size: 11px; letter-spacing: 0.1em;
-            color: rgba(255,255,255,0.4);
-        }
-
-        /* ===== BACK TO TOP ===== */
-        #back-top {
-            position: fixed; bottom: 40px; right: 40px; z-index: 50;
-            width: 56px; height: 56px; border-radius: 50%;
-            background: var(--white); color: var(--ink);
-            box-shadow: 0 10px 30px rgba(0,0,0,0.15); border: none;
-            display: flex; align-items: center; justify-content: center;
-            font-size: 24px;
-            opacity: 0; pointer-events: none;
-            transition: all 0.4s var(--ease-expo);
-            cursor: pointer;
-        }
+        /* --- LIGHTBOX & BACK TO TOP --- */
+        #back-top { position: fixed; bottom: 40px; right: 40px; z-index: 50; width: 56px; height: 56px; border-radius: 50%; background: var(--white); color: var(--ink); box-shadow: 0 10px 30px rgba(0,0,0,0.15); border: none; display: flex; align-items: center; justify-content: center; font-size: 24px; opacity: 0; pointer-events: none; transition: all 0.4s var(--ease-expo); cursor: pointer; }
         #back-top.show { opacity: 1; pointer-events: all; }
         #back-top:hover { background: var(--green); color: white; transform: translateY(-4px); box-shadow: 0 15px 35px rgba(0,166,81,0.3); }
-
-        /* ===== LIGHTBOX ===== */
-        #lightbox {
-            position: fixed; inset: 0; z-index: 200;
-            background: rgba(0,0,0,0.9);
-            display: flex; align-items: center; justify-content: center;
-            opacity: 0; pointer-events: none;
-            transition: opacity 0.4s;
-            backdrop-filter: blur(10px);
-        }
+        #lightbox { position: fixed; inset: 0; z-index: 200; background: rgba(0,0,0,0.9); display: flex; align-items: center; justify-content: center; opacity: 0; pointer-events: none; transition: opacity 0.4s; backdrop-filter: blur(10px); }
         #lightbox.open { opacity: 1; pointer-events: all; }
-        #lightbox img {
-            max-width: 90vw; max-height: 90vh;
-            object-fit: contain; border-radius: var(--radius-md); box-shadow: 0 20px 60px rgba(0,0,0,0.5);
-            transform: scale(0.95);
-            transition: transform 0.4s var(--ease-expo);
-        }
+        #lightbox img { max-width: 90vw; max-height: 90vh; object-fit: contain; border-radius: var(--radius-md); box-shadow: 0 20px 60px rgba(0,0,0,0.5); transform: scale(0.95); transition: transform 0.4s var(--ease-expo); }
         #lightbox.open img { transform: scale(1); }
-        .lb-close {
-            position: absolute; top: 32px; right: 40px;
-            color: white; font-size: 32px; background: rgba(255,255,255,0.1); width: 64px; height: 64px; border-radius: 50%;
-            cursor: pointer; transition: all 0.3s;
-            border: none; display: flex; align-items: center; justify-content: center;
-        }
+        .lb-close { position: absolute; top: 32px; right: 40px; color: white; font-size: 32px; background: rgba(255,255,255,0.1); width: 64px; height: 64px; border-radius: 50%; cursor: pointer; transition: all 0.3s; border: none; display: flex; align-items: center; justify-content: center; }
         .lb-close:hover { background: var(--green); transform: scale(1.1); }
 
-        /* 💡 แก้ไข Keyframes สำหรับ Animation ใหม่ */
-        /* ===== REVEAL ANIMATIONS ===== */
-        .reveal {
-            opacity: 0; transform: translateY(32px);
-            transition: opacity 0.9s var(--ease-expo), transform 0.9s var(--ease-expo);
-        }
+        /* --- ANIMATIONS & RESPONSIVE --- */
+        .reveal { opacity: 0; transform: translateY(32px); transition: opacity 0.9s var(--ease-expo), transform 0.9s var(--ease-expo); }
         .reveal.in { opacity: 1; transform: none; }
         .reveal-delay-1 { transition-delay: 0.15s; }
         .reveal-delay-2 { transition-delay: 0.3s; }
         .reveal-delay-3 { transition-delay: 0.45s; }
+        @keyframes fade-up { 0% { opacity: 0; transform: translateY(24px); } 100% { opacity: 1; transform: translateY(0); } }
+        @keyframes fade-in { 0% { opacity: 0; } 100% { opacity: 1; } }
 
-        @keyframes fade-up {
-            0% { opacity: 0; transform: translateY(24px); }
-            100% { opacity: 1; transform: translateY(0); }
-        }
-        @keyframes fade-in {
-            0% { opacity: 0; }
-            100% { opacity: 1; }
-        }
-
-        /* ===== RESPONSIVE ===== */
         @media (max-width: 1024px) {
-            .nav-inner { padding: 0 32px; }
-            .container { padding: 0 32px; }
+            .nav-inner, .container { padding: 0 32px; }
             .activity-header, .gallery-container { padding-left: 32px; padding-right: 32px; }
             .hero-content { padding: 0 32px 64px; }
             .overview-grid { grid-template-columns: 1fr; gap: 48px; }
@@ -905,9 +374,7 @@
             .stats-row { grid-template-columns: repeat(3, 1fr); }
             .resp-item { grid-template-columns: 64px 1fr; padding: 32px; }
             .resp-detail { grid-column: 2; }
-            .project-layout { grid-template-columns: 1fr; }
-            .mentors-grid { grid-template-columns: 1fr; }
-            .contact-grid { grid-template-columns: 1fr; gap: 48px; }
+            .project-layout, .mentors-grid, .contact-grid { grid-template-columns: 1fr; }
             .contact-social { align-items: flex-start; justify-content: flex-start; margin-top: 24px;}
             .gallery-item { width: 340px; }
             #projects { margin: 0 16px; padding: 64px 0; border-radius: 24px; }
@@ -917,7 +384,7 @@
             .section { padding: 80px 0; }
             .nav-links { display: none; }
             .hero-actions { margin-left: 0; flex-direction: column; width: 100%; align-items: stretch; }
-            .btn-primary, .btn-ghost { justify-content: center; }
+            .btn-primary, .btn-ghost, .btn-white { justify-content: center; }
             .hero-meta { gap: 24px; }
             .hero-divider { display: none; }
             .resp-header { grid-template-columns: 1fr; gap: 24px; margin-bottom: 40px; }
@@ -927,12 +394,10 @@
             .mentor-card { flex-direction: column; padding: 32px; text-align: center; gap: 24px; }
             .mentor-contact a { margin: 4px; justify-content: center; }
             .footer-bottom { flex-direction: column; gap: 24px; text-align: center; }
-            #cursor { display: none; }
-            .hero-scroll { display: none; }
+            #cursor, .hero-scroll { display: none; }
             .ui-grid { grid-template-columns: 1fr; }
             .ui-item.full-width { grid-column: 1; }
-            .gallery-item { width: 85vw; }
-            .doc-card { width: 85vw; }
+            .gallery-item, .doc-card { width: 85vw; }
             .activity-header { flex-direction: column; align-items: flex-start; gap: 16px; }
             .contact-info { padding: 24px; }
             .contact-row { flex-direction: column; gap: 8px; }
@@ -941,16 +406,14 @@
 </head>
 <body>
 
-    <!-- Cursor -->
     <div id="cursor"></div>
-
-    <!-- Scroll Progress -->
     <div id="scroll-bar"></div>
 
-    <!-- ===== NAVBAR ===== -->
+    <!-- ========================================== -->
+    <!-- NAVIGATION BAR -->
+    <!-- ========================================== -->
     <nav id="nav">
         <div class="nav-inner">
-            <!-- 💡 อัปเดตโลโก้: ดึง logo.png แบบชัวร์ๆ ไม่มีกล่องขาวกวนใจ -->
             <a href="#" class="nav-logo">
                 <img src="./logo.png" alt="Big C">
             </a>
@@ -965,7 +428,9 @@
         </div>
     </nav>
 
-    <!-- ===== HERO ===== -->
+    <!-- ========================================== -->
+    <!-- HERO SECTION (ส่วนหัวของเว็บไซต์) -->
+    <!-- ========================================== -->
     <section id="hero">
         <div class="hero-bg">
             <img src="./bigc-bg.webp" alt="Big C Headquarters">
@@ -982,7 +447,6 @@
             <div class="hero-meta">
                 <div class="hero-profile">
                     <div class="hero-avatar">
-                        <!-- 💡 อัปเดตรูปโปรไฟล์: ดึงรูป profile.jpg ขึ้นแน่นอน -->
                         <img src="./profile.jpg" alt="Peeranut Intachai">
                     </div>
                     <div>
@@ -1000,6 +464,11 @@
                 </div>
 
                 <div class="hero-actions">
+                    <!-- 💡 เพิ่มปุ่มเล่มสารนิพนธ์ตรงนี้ -->
+                    <a href="ใส่ลิ้งก์_PDF_ตรงนี้" target="_blank" class="btn-white" id="btn-pdf">
+                        <i class="ph-fill ph-file-pdf" style="font-size: 20px; color: #E72528;"></i>
+                        เล่มสารนิพนธ์
+                    </a>
                     <a href="#projects" class="btn-primary">
                         ดูผลงานระบบ
                         <i class="ph-bold ph-arrow-right"></i>
@@ -1017,7 +486,9 @@
         </div>
     </section>
 
-    <!-- ===== OVERVIEW ===== -->
+    <!-- ========================================== -->
+    <!-- 01. OVERVIEW SECTION -->
+    <!-- ========================================== -->
     <section id="overview" class="section">
         <div class="container">
             <div class="section-label reveal">
@@ -1083,7 +554,9 @@
         </div>
     </section>
 
-    <!-- ===== RESPONSIBILITIES ===== -->
+    <!-- ========================================== -->
+    <!-- 02. RESPONSIBILITIES SECTION -->
+    <!-- ========================================== -->
     <section id="responsibilities" class="section">
         <div class="container">
             <div class="section-label reveal">
@@ -1121,7 +594,9 @@
         </div>
     </section>
 
-    <!-- ===== PROJECTS ===== -->
+    <!-- ========================================== -->
+    <!-- 03. PROJECTS SECTION -->
+    <!-- ========================================== -->
     <section id="projects" class="section">
         <div class="container">
             <div class="section-label reveal">
@@ -1166,30 +641,48 @@
                     </div>
                 </div>
 
-                <!-- UI Grid Showcase (Selected 6 best images) -->
+                <!-- UI Grid Showcase -->
                 <div class="ui-grid reveal">
                     <div class="ui-item full-width lightbox-trigger">
-                        <img src="https://lh3.googleusercontent.com/pw/AP1GczNesPSHHYcR04aRdtPxI2OMU32ETvecfwXAfNW4Rfsj0Ddzqtzg2bpJl23aZxJbSaBTpJq9rDvciG0bL0CCPOlaIDZnerhlwPhU-PkKZBsP0fW2fs2vGI405zDoHGWg7BYqnB3lXg0GM0TlrRWj5dH7Jg=w1913-h1022-s-no-gm?authuser=0" alt="Login Screen">
+                        <img 
+                            src="https://lh3.googleusercontent.com/pw/AP1GczNesPSHHYcR04aRdtPxI2OMU32ETvecfwXAfNW4Rfsj0Ddzqtzg2bpJl23aZxJbSaBTpJq9rDvciG0bL0CCPOlaIDZnerhlwPhU-PkKZBsP0fW2fs2vGI405zDoHGWg7BYqnB3lXg0GM0TlrRWj5dH7Jg=w1913-h1022-s-no-gm?authuser=0" 
+                            alt="Login Screen"
+                        >
                         <div class="img-hint"><i class="ph-bold ph-sign-in"></i> หน้า Login</div>
                     </div>
                     <div class="ui-item lightbox-trigger">
-                        <img src="https://lh3.googleusercontent.com/pw/AP1GczND16q_tkB1LRxrgf6xQLVTjp_X0zKk_j0CcIFD61wKOgwDlWkNLnkSt_sWio7mfC8BXslbLx9TFI4Ty_lDYfOeX1K3yTArl_YAwL6GADdj6Tgn7FLmpjEH5U1XN4imcmlOq7gBmTI7Tc5fqOcNvoDruQ=w1916-h1012-s-no-gm?authuser=0" alt="HR Recruiter Dashboard">
+                        <img 
+                            src="https://lh3.googleusercontent.com/pw/AP1GczND16q_tkB1LRxrgf6xQLVTjp_X0zKk_j0CcIFD61wKOgwDlWkNLnkSt_sWio7mfC8BXslbLx9TFI4Ty_lDYfOeX1K3yTArl_YAwL6GADdj6Tgn7FLmpjEH5U1XN4imcmlOq7gBmTI7Tc5fqOcNvoDruQ=w1916-h1012-s-no-gm?authuser=0" 
+                            alt="HR Recruiter Dashboard"
+                        >
                         <div class="img-hint">หน้า Dashboard (User HR)</div>
                     </div>
                     <div class="ui-item lightbox-trigger">
-                        <img src="https://lh3.googleusercontent.com/pw/AP1GczOWa7KdcsfQSp-mm7bah5EJe9OLwM9YHUKPLJQYrQ23Ufi51CJkjEKhsVLxLZMCpjihUjYFvNRLqREkuSNeEcraEj9vJuv_c9zQaYx37AUtZuiQZ5D0yn3tuUhSi1k15rEHpbZlAXrqSj-dCHa2cfYqkA=w1911-h1030-s-no-gm?authuser=0" alt="บันทึกผู้สมัคร">
+                        <img 
+                            src="https://lh3.googleusercontent.com/pw/AP1GczOWa7KdcsfQSp-mm7bah5EJe9OLwM9YHUKPLJQYrQ23Ufi51CJkjEKhsVLxLZMCpjihUjYFvNRLqREkuSNeEcraEj9vJuv_c9zQaYx37AUtZuiQZ5D0yn3tuUhSi1k15rEHpbZlAXrqSj-dCHa2cfYqkA=w1911-h1030-s-no-gm?authuser=0" 
+                            alt="บันทึกผู้สมัคร"
+                        >
                         <div class="img-hint">หน้าบันทึกผู้สมัคร</div>
                     </div>
                     <div class="ui-item lightbox-trigger">
-                        <img src="https://lh3.googleusercontent.com/pw/AP1GczMaEZPhJCH1n-8BBGMavd-a-n95ctm4SFngLDKyTsVZ94vJiLIl93ovGeTGao5AmneLM20-rW8daa-I43vWDsZYgJclNTgEkPwSY6WhkdXLL96JtiN-CTiji0qeODk3vF8s48l3oGOI2vu3w4duE4p4iA=w1907-h1016-s-no-gm?authuser=0" alt="Admin Dashboard">
+                        <img 
+                            src="https://lh3.googleusercontent.com/pw/AP1GczMaEZPhJCH1n-8BBGMavd-a-n95ctm4SFngLDKyTsVZ94vJiLIl93ovGeTGao5AmneLM20-rW8daa-I43vWDsZYgJclNTgEkPwSY6WhkdXLL96JtiN-CTiji0qeODk3vF8s48l3oGOI2vu3w4duE4p4iA=w1907-h1016-s-no-gm?authuser=0" 
+                            alt="Admin Dashboard"
+                        >
                         <div class="img-hint">หน้า Admin (HRM)</div>
                     </div>
                     <div class="ui-item lightbox-trigger">
-                        <img src="https://lh3.googleusercontent.com/pw/AP1GczO-XapmpTJrd6LhkfdbG0_pWKU-oe7hPPYPpyC0HgyJJjhVaxwIz3AorL7Z9VCLvtJgRiIlDqpMIE0as_EEKolHSzm1ZUMd2pQTAvsl0wFJvKR0vXVDY35UEj3W-ihwfzht4Muk7gVPaPx2ut9x9b0YLg=w1912-h1021-s-no-gm?authuser=0" alt="Talent Analytic">
+                        <img 
+                            src="https://lh3.googleusercontent.com/pw/AP1GczO-XapmpTJrd6LhkfdbG0_pWKU-oe7hPPYPpyC0HgyJJjhVaxwIz3AorL7Z9VCLvtJgRiIlDqpMIE0as_EEKolHSzm1ZUMd2pQTAvsl0wFJvKR0vXVDY35UEj3W-ihwfzht4Muk7gVPaPx2ut9x9b0YLg=w1912-h1021-s-no-gm?authuser=0" 
+                            alt="Talent Analytic"
+                        >
                         <div class="img-hint">Talent Analytic</div>
                     </div>
                     <div class="ui-item full-width lightbox-trigger">
-                        <img src="https://lh3.googleusercontent.com/pw/AP1GczP1ocZF-OsohYC6zsVSs9G9L-sMGF9BIxG4xoTABsxEuEtI3-Yfqc10ANZ4m_X7LoH4z4urRh4tWLUgoRdOXIPFNiorapJucQJHDwuoTETsfk_okGvwddiIMtfuby53CMDFYWGHjDNV03HuzWycaskWWQ=w1912-h1001-s-no-gm?authuser=0" alt="Report Admin">
+                        <img 
+                            src="https://lh3.googleusercontent.com/pw/AP1GczP1ocZF-OsohYC6zsVSs9G9L-sMGF9BIxG4xoTABsxEuEtI3-Yfqc10ANZ4m_X7LoH4z4urRh4tWLUgoRdOXIPFNiorapJucQJHDwuoTETsfk_okGvwddiIMtfuby53CMDFYWGHjDNV03HuzWycaskWWQ=w1912-h1001-s-no-gm?authuser=0" 
+                            alt="Report Admin"
+                        >
                         <div class="img-hint">หน้า Report Dashboard</div>
                     </div>
                 </div>
@@ -1204,7 +697,6 @@
                     <span class="tech-tag"><i class="ph-light ph-plugs-connected"></i> Google API Studio</span>
                     <span class="tech-tag"><i class="ph-light ph-sparkle"></i> Claude Cowork AI</span>
                     <span class="tech-tag"><i class="ph-light ph-magic-wand"></i> Google Gemini</span>
-                    <!-- duplicate for loop -->
                     <span class="tech-tag"><i class="ph-light ph-code"></i> VS Code</span>
                     <span class="tech-tag"><i class="ph-light ph-database"></i> phpMyAdmin</span>
                     <span class="tech-tag"><i class="ph-light ph-cloud-arrow-up"></i> BybHost</span>
@@ -1216,7 +708,9 @@
         </div>
     </section>
 
-    <!-- ===== ACTIVITIES & GALLERY ===== -->
+    <!-- ========================================== -->
+    <!-- 04. ACTIVITIES & GALLERY -->
+    <!-- ========================================== -->
     <section id="activities" class="section">
         <div class="container" style="padding:0; max-width: 100%;">
             <div class="section-label reveal" style="padding: 8px 24px; max-width: 1400px; margin: 0 auto 64px;">
@@ -1225,7 +719,7 @@
                 <span class="section-tag" style="color: var(--ink-4);">Activities & Gallery</span>
             </div>
 
-            <!-- 1. HUB Recruiter Outing 2026 -->
+            <!-- Group 1: HUB Recruiter Outing 2026 -->
             <div class="activity-group reveal">
                 <div class="activity-header">
                     <div>
@@ -1248,20 +742,29 @@
                             <span class="doc-link-text">ดูบน Canva <i class="ph-bold ph-arrow-right"></i></span>
                         </a>
                         <div class="gallery-item lightbox-trigger">
-                            <img src="https://lh3.googleusercontent.com/pw/AP1GczMlJ0FmOowCfTAGuV5d8Hh0n_vDdQ85PbfxckHfeJVTUgWeYoVXFGolDkyqBYyVatq81bM0pIwL6ow2Rqr-I1cQRCRcXRvOJElBzwP_sfmM3wtKhbhqoz0gfr5sMrqAj0Tyznin_6tgVAyCT9K_ruj_4g=w730-h1033-s-no-gm?authuser=0" alt="Agenda Poster">
+                            <img 
+                                src="https://lh3.googleusercontent.com/pw/AP1GczMlJ0FmOowCfTAGuV5d8Hh0n_vDdQ85PbfxckHfeJVTUgWeYoVXFGolDkyqBYyVatq81bM0pIwL6ow2Rqr-I1cQRCRcXRvOJElBzwP_sfmM3wtKhbhqoz0gfr5sMrqAj0Tyznin_6tgVAyCT9K_ruj_4g=w730-h1033-s-no-gm?authuser=0" 
+                                alt="Agenda Poster"
+                            >
                             <div class="img-hint">Poster Agenda กิจกรรม</div>
                         </div>
                         <div class="gallery-item lightbox-trigger">
-                            <img src="https://lh3.googleusercontent.com/pw/AP1GczPd6rJjXqXM5Nh0j6IQQy-McnmLYKm3B2LwCiVbPoOooEHseJr3o7f5UCva3RjXPtF1XW5itzLn2o0s9oSflgh-eIEzGrB-EKZPHMz1nq6bYUXsQ5DCKiJ0GeDPLtBHm7EpLjNsk3yXB6-ZLxxTnccX0g=w1376-h1033-s-no-gm?authuser=0" alt="Outing Activity">
+                            <img 
+                                src="https://lh3.googleusercontent.com/pw/AP1GczPd6rJjXqXM5Nh0j6IQQy-McnmLYKm3B2LwCiVbPoOooEHseJr3o7f5UCva3RjXPtF1XW5itzLn2o0s9oSflgh-eIEzGrB-EKZPHMz1nq6bYUXsQ5DCKiJ0GeDPLtBHm7EpLjNsk3yXB6-ZLxxTnccX0g=w1376-h1033-s-no-gm?authuser=0" 
+                                alt="Outing Activity"
+                            >
                         </div>
                         <div class="gallery-item lightbox-trigger">
-                            <img src="https://lh3.googleusercontent.com/pw/AP1GczMTsXB90yQCc8d_nVy6WsHdyYo1X_KyoCs4sI6s1dHhXU8RvCC0L_ecOqTxjCgHUfMquxV_aIJe_v3RuALKwGHzaIBeLvsgNmHLngAJSf4YlxisevusXQ1zmN6zvPteNSdr3Avk4lzIIpLk091fklS2DQ=w1376-h1033-s-no-gm?authuser=0" alt="Outing Group Photo">
+                            <img 
+                                src="https://lh3.googleusercontent.com/pw/AP1GczMTsXB90yQCc8d_nVy6WsHdyYo1X_KyoCs4sI6s1dHhXU8RvCC0L_ecOqTxjCgHUfMquxV_aIJe_v3RuALKwGHzaIBeLvsgNmHLngAJSf4YlxisevusXQ1zmN6zvPteNSdr3Avk4lzIIpLk091fklS2DQ=w1376-h1033-s-no-gm?authuser=0" 
+                                alt="Outing Group Photo"
+                            >
                         </div>
                     </div>
                 </div>
             </div>
 
-            <!-- 2. Artworks & PR -->
+            <!-- Group 2: Artworks & PR -->
             <div class="activity-group reveal">
                 <div class="activity-header">
                     <div>
@@ -1272,26 +775,38 @@
                 <div class="gallery-container">
                     <div class="gallery-track">
                         <div class="gallery-item lightbox-trigger" style="width: 320px;">
-                            <img src="https://lh3.googleusercontent.com/pw/AP1GczNIPr6o02WCUh-OIMCUC7Hba2jKMxV35GC-8qA8V0z1ljZPVJygAJGd3WWcna22gF-j7EjCHjZqs5QiCQ4RlAfXKGh3D6pXZGky5FpuiUZme9ao_V0L8X_OodhbmRc0TAVmZ4Od_yknCeP4I3w5_dMXRQ=w940-h788-s-no-gm?authuser=0" alt="Artwork 1">
+                            <img 
+                                src="https://lh3.googleusercontent.com/pw/AP1GczNIPr6o02WCUh-OIMCUC7Hba2jKMxV35GC-8qA8V0z1ljZPVJygAJGd3WWcna22gF-j7EjCHjZqs5QiCQ4RlAfXKGh3D6pXZGky5FpuiUZme9ao_V0L8X_OodhbmRc0TAVmZ4Od_yknCeP4I3w5_dMXRQ=w940-h788-s-no-gm?authuser=0" 
+                                alt="Artwork 1"
+                            >
                             <div class="img-hint">Artwork รับสมัครงาน 1</div>
                         </div>
                         <div class="gallery-item lightbox-trigger" style="width: 320px;">
-                            <img src="https://lh3.googleusercontent.com/pw/AP1GczMpk2Gt1aFnNmZG6a-2eZ06NO35a7qACLjQGRncwutwFbRLiCkwR5h0x6uINjSPquD-0i1K0TvfdOHKbNXDfa2s8c2PZxqpM5Y1CNloqLJJWP8b0UPPu0hmSeVzGQcjwi5eSMdmG2vBAO3C7hECAdlFXA=w826-h1033-s-no-gm?authuser=0" alt="Artwork 2">
+                            <img 
+                                src="https://lh3.googleusercontent.com/pw/AP1GczMpk2Gt1aFnNmZG6a-2eZ06NO35a7qACLjQGRncwutwFbRLiCkwR5h0x6uINjSPquD-0i1K0TvfdOHKbNXDfa2s8c2PZxqpM5Y1CNloqLJJWP8b0UPPu0hmSeVzGQcjwi5eSMdmG2vBAO3C7hECAdlFXA=w826-h1033-s-no-gm?authuser=0" 
+                                alt="Artwork 2"
+                            >
                             <div class="img-hint">Artwork รับสมัครงาน 2</div>
                         </div>
                         <div class="gallery-item lightbox-trigger" style="width: 320px;">
-                            <img src="https://lh3.googleusercontent.com/pw/AP1GczOJ-yY_ax1VKhJa5l8Q8hT35rHxVJwAqDO1sHHaAy4GaZoGuKTrBYp2hXOZq-S-JQQf0RXCtMI3vSJGldr8QpYMjJ6ZjzeRf_m3SfL0XQxrhoqtBFQeUUOPuAaKX1nRUFhYNGuTpPCMy-Be7RboCZFNPA=w1033-h1033-s-no-gm?authuser=0" alt="Artwork 3">
+                            <img 
+                                src="https://lh3.googleusercontent.com/pw/AP1GczOJ-yY_ax1VKhJa5l8Q8hT35rHxVJwAqDO1sHHaAy4GaZoGuKTrBYp2hXOZq-S-JQQf0RXCtMI3vSJGldr8QpYMjJ6ZjzeRf_m3SfL0XQxrhoqtBFQeUUOPuAaKX1nRUFhYNGuTpPCMy-Be7RboCZFNPA=w1033-h1033-s-no-gm?authuser=0" 
+                                alt="Artwork 3"
+                            >
                             <div class="img-hint">Artwork รับสมัครงาน 3</div>
                         </div>
                         <div class="gallery-item lightbox-trigger" style="width: 600px;">
-                            <img src="https://lh3.googleusercontent.com/pw/AP1GczOH7S_rVYHtzPdF2WQmQFyhpouE5DhaCrZvt1QD0ErxQ6GHwiWctyBC4z7O6-XCPafrdoWX5mWz3fPe0ia6Z_H77O2MEORjonbMWnTts41Y3VChP8Bi2_XZSHyQlnSUZD1Y7GS7Cdnh7QZJ3rti_XnkFw=w1920-h960-s-no-gm?authuser=0" alt="Vinyl Banner">
+                            <img 
+                                src="https://lh3.googleusercontent.com/pw/AP1GczOH7S_rVYHtzPdF2WQmQFyhpouE5DhaCrZvt1QD0ErxQ6GHwiWctyBC4z7O6-XCPafrdoWX5mWz3fPe0ia6Z_H77O2MEORjonbMWnTts41Y3VChP8Bi2_XZSHyQlnSUZD1Y7GS7Cdnh7QZJ3rti_XnkFw=w1920-h960-s-no-gm?authuser=0" 
+                                alt="Vinyl Banner"
+                            >
                             <div class="img-hint">Template ป้ายไวนิลลงพื้นที่</div>
                         </div>
                     </div>
                 </div>
             </div>
 
-            <!-- 3. Field Work (Expo & On Tour) -->
+            <!-- Group 3: Field Work -->
             <div class="activity-group reveal">
                 <div class="activity-header">
                     <div>
@@ -1302,26 +817,38 @@
                 <div class="gallery-container">
                     <div class="gallery-track">
                         <div class="gallery-item lightbox-trigger">
-                            <img src="https://lh3.googleusercontent.com/pw/AP1GczMx641gKGy4MlMeGmx4ZIuygbRZ6WgMQxJ2XU8CGAHw2eSWFAMCgTJiEBZO_KTJYCmur52_HsNdkg1OFOuQC98bW5v0LkUgOIaojZm9umKP-B9JaLkLtjYM1kOHMa89uKxuxHZ9lZf2FymHGZsGeeF6sw=w1545-h1033-s-no-gm?authuser=0" alt="Job Expo Mascot">
+                            <img 
+                                src="https://lh3.googleusercontent.com/pw/AP1GczMx641gKGy4MlMeGmx4ZIuygbRZ6WgMQxJ2XU8CGAHw2eSWFAMCgTJiEBZO_KTJYCmur52_HsNdkg1OFOuQC98bW5v0LkUgOIaojZm9umKP-B9JaLkLtjYM1kOHMa89uKxuxHZ9lZf2FymHGZsGeeF6sw=w1545-h1033-s-no-gm?authuser=0" 
+                                alt="Job Expo Mascot"
+                            >
                             <div class="img-hint">มาสคอตพี่บิ๊กกี้ งาน Job Expo</div>
                         </div>
                         <div class="gallery-item lightbox-trigger">
-                            <img src="https://lh3.googleusercontent.com/pw/AP1GczPwXfjLmOS6kKGVVDea2_DGRD7t_Q1tw0NhsPgTWGE3E_0ko0Ubyh5CI4SQhjvLIjMXiHejbh3mYAoE6L8YlagHMFux1GYZj-o2i1XhArde1RRVfJ1TEsaLtVDFjj0DmaoIbbLXCwpOYBxmYQ6Efgu6fQ=w1376-h1033-s-no-gm?authuser=0" alt="Job Expo Info">
+                            <img 
+                                src="https://lh3.googleusercontent.com/pw/AP1GczPwXfjLmOS6kKGVVDea2_DGRD7t_Q1tw0NhsPgTWGE3E_0ko0Ubyh5CI4SQhjvLIjMXiHejbh3mYAoE6L8YlagHMFux1GYZj-o2i1XhArde1RRVfJ1TEsaLtVDFjj0DmaoIbbLXCwpOYBxmYQ6Efgu6fQ=w1376-h1033-s-no-gm?authuser=0" 
+                                alt="Job Expo Info"
+                            >
                             <div class="img-hint">ให้ข้อมูลผู้สมัครในงาน Job Expo</div>
                         </div>
                         <div class="gallery-item lightbox-trigger">
-                            <img src="https://lh3.googleusercontent.com/pw/AP1GczPpQyt1MMS_syAFs-63g3njLfHogaA40v4B8-_UOXUhzvv4AwI-BHycqFk0Zhu79aMLQ3951fmIj-D02s500Yls8CRKUxiGCTH18NBfj1nO8GnwxKWrP1kIQqtGra9gWZTJFSGrJUVQO2wsmQzHlWPP7w=w1706-h960-s-no-gm?authuser=0" alt="Job On Tour">
+                            <img 
+                                src="https://lh3.googleusercontent.com/pw/AP1GczPpQyt1MMS_syAFs-63g3njLfHogaA40v4B8-_UOXUhzvv4AwI-BHycqFk0Zhu79aMLQ3951fmIj-D02s500Yls8CRKUxiGCTH18NBfj1nO8GnwxKWrP1kIQqtGra9gWZTJFSGrJUVQO2wsmQzHlWPP7w=w1706-h960-s-no-gm?authuser=0" 
+                                alt="Job On Tour"
+                            >
                             <div class="img-hint">ลงพื้นที่ Big C Job On Tour</div>
                         </div>
                         <div class="gallery-item lightbox-trigger">
-                            <img src="https://lh3.googleusercontent.com/pw/AP1GczP3uHC2a2_iI1dDghwpiRKwM5G6gRyX3quGdzBhiGAFika1c3_OZVpi4VSEpiBCCh1ua5avdZNZEUhm3T0kvzNwEjXxZytx-ylDxs82l0B64oOhXRL0dAsNgww3-eBAOL3ZOA4bSRF8x3mxlrGIsJ3lfQ=w1376-h1033-s-no-gm?authuser=0" alt="Job On Tour Commnuity">
+                            <img 
+                                src="https://lh3.googleusercontent.com/pw/AP1GczP3uHC2a2_iI1dDghwpiRKwM5G6gRyX3quGdzBhiGAFika1c3_OZVpi4VSEpiBCCh1ua5avdZNZEUhm3T0kvzNwEjXxZytx-ylDxs82l0B64oOhXRL0dAsNgww3-eBAOL3ZOA4bSRF8x3mxlrGIsJ3lfQ=w1376-h1033-s-no-gm?authuser=0" 
+                                alt="Job On Tour Commnuity"
+                            >
                             <div class="img-hint">แจกใบปลิวรับสมัครงานในชุมชน</div>
                         </div>
                     </div>
                 </div>
             </div>
 
-            <!-- 4. Company Events -->
+            <!-- Group 4: Company Events -->
             <div class="activity-group reveal">
                 <div class="activity-header">
                     <div>
@@ -1332,19 +859,31 @@
                 <div class="gallery-container">
                     <div class="gallery-track">
                         <div class="gallery-item lightbox-trigger">
-                            <img src="https://lh3.googleusercontent.com/pw/AP1GczMNs1H-ZPPMkTPFMT6sfMH27FEJeqg6YqePWTHWTHj2slYw8cX4zK09IjgHk7Cb5qckP17BnOBeUHghAIxvHVVNZemT0MiVTsfozpYdKMzVHA7siUGpgLt_3vmFlxQMbI2zd5HHPXNjGbP6pFFh-xl9qA=w1548-h1033-s-no-gm?authuser=0" alt="Merit Making">
+                            <img 
+                                src="https://lh3.googleusercontent.com/pw/AP1GczMNs1H-ZPPMkTPFMT6sfMH27FEJeqg6YqePWTHWTHj2slYw8cX4zK09IjgHk7Cb5qckP17BnOBeUHghAIxvHVVNZemT0MiVTsfozpYdKMzVHA7siUGpgLt_3vmFlxQMbI2zd5HHPXNjGbP6pFFh-xl9qA=w1548-h1033-s-no-gm?authuser=0" 
+                                alt="Merit Making"
+                            >
                             <div class="img-hint">ทำบุญตักบาตร ประจำปี 2569</div>
                         </div>
                         <div class="gallery-item lightbox-trigger">
-                            <img src="https://lh3.googleusercontent.com/pw/AP1GczO6FwYrWVtoDuMGTKSvn9JF6TQRL0NLaocf6Hmgqn5fJGpEWtO63PdDWFtERy1_krxMTPLIbJh_DRjT8654TDEjfiXugVt_f48U4FgXgRQZMqY8X3KkGKRwO05qAIuuRhDnY9iV1-1qgdrJ-m_ledBJnQ=w775-h1033-s-no-gm?authuser=0" alt="Staff Party Booth">
+                            <img 
+                                src="https://lh3.googleusercontent.com/pw/AP1GczO6FwYrWVtoDuMGTKSvn9JF6TQRL0NLaocf6Hmgqn5fJGpEWtO63PdDWFtERy1_krxMTPLIbJh_DRjT8654TDEjfiXugVt_f48U4FgXgRQZMqY8X3KkGKRwO05qAIuuRhDnY9iV1-1qgdrJ-m_ledBJnQ=w775-h1033-s-no-gm?authuser=0" 
+                                alt="Staff Party Booth"
+                            >
                             <div class="img-hint">Staff บูธปาโป่ง งาน BJC Big C Party</div>
                         </div>
                         <div class="gallery-item lightbox-trigger">
-                            <img src="https://lh3.googleusercontent.com/pw/AP1GczNfsxNqVBliECrRdoxCS9vL7NweJkonN9HPTNQVAQ6fcMzYtNraRkwFTp8lRZBPuT0AqFX6V283Jj0XXm0zobuvPKmngcjm4ga3CxoAba2Mi3Cx1sKjZisrglIhesBVR-4tg-MeNJ-9qyqFlRrf-RtWPA=w775-h1033-s-no-gm?authuser=0" alt="Staff Party Fun">
+                            <img 
+                                src="https://lh3.googleusercontent.com/pw/AP1GczNfsxNqVBliECrRdoxCS9vL7NweJkonN9HPTNQVAQ6fcMzYtNraRkwFTp8lRZBPuT0AqFX6V283Jj0XXm0zobuvPKmngcjm4ga3CxoAba2Mi3Cx1sKjZisrglIhesBVR-4tg-MeNJ-9qyqFlRrf-RtWPA=w775-h1033-s-no-gm?authuser=0" 
+                                alt="Staff Party Fun"
+                            >
                             <div class="img-hint">บรรยากาศงาน Rhythm Of Love</div>
                         </div>
                         <div class="gallery-item lightbox-trigger">
-                            <img src="https://lh3.googleusercontent.com/pw/AP1GczO_pK6ysoHCDGsDw7_M3eXI0zdPaN3QxtbS5rQN6fV0WbRENZV3ws1UnkTpk7Y5oV71xuJh9i_Ta-IiDIOnxQYw8zK9SB9H0_rdSzpsvg6wrljV9CwzOqGO7WSDRFmYtsj5AuSRr1SVwPC5Ymogm3OVOw=w1376-h1033-s-no-gm?authuser=0" alt="Worship">
+                            <img 
+                                src="https://lh3.googleusercontent.com/pw/AP1GczO_pK6ysoHCDGsDw7_M3eXI0zdPaN3QxtbS5rQN6fV0WbRENZV3ws1UnkTpk7Y5oV71xuJh9i_Ta-IiDIOnxQYw8zK9SB9H0_rdSzpsvg6wrljV9CwzOqGO7WSDRFmYtsj5AuSRr1SVwPC5Ymogm3OVOw=w1376-h1033-s-no-gm?authuser=0" 
+                                alt="Worship"
+                            >
                             <div class="img-hint">กิจกรรมไหว้พระพรหม ประจำเดือน</div>
                         </div>
                     </div>
@@ -1354,7 +893,9 @@
         </div>
     </section>
 
-    <!-- ===== MENTORS ===== -->
+    <!-- ========================================== -->
+    <!-- 05. MENTORS SECTION -->
+    <!-- ========================================== -->
     <section id="mentors" class="section">
         <div class="container">
             <div class="section-label reveal" style="margin: 0 auto 64px;">
@@ -1370,7 +911,10 @@
             <div class="mentors-grid reveal reveal-delay-1">
                 <div class="mentor-card">
                     <div class="mentor-photo">
-                        <img src="https://lh3.googleusercontent.com/pw/AP1GczNWeXeniWGbmCG1sIJZBoiAG3HPK7gAFoAPa0w9Gnsv3Nr6txsMGzFycVF3ipnxDN3-YnC9uN6R-mQBUkvmaYmM_KsXYrAbOH8-f1l3wSbGMY8ONIXjORs_16Ew_vOII1TJB_OEoc1vFO1iLiAD0uvwiA=w433-h737-s-no-gm?authuser=0" alt="ผศ. ดร.ฐิติชัย รักบำรุง">
+                        <img 
+                            src="https://lh3.googleusercontent.com/pw/AP1GczNWeXeniWGbmCG1sIJZBoiAG3HPK7gAFoAPa0w9Gnsv3Nr6txsMGzFycVF3ipnxDN3-YnC9uN6R-mQBUkvmaYmM_KsXYrAbOH8-f1l3wSbGMY8ONIXjORs_16Ew_vOII1TJB_OEoc1vFO1iLiAD0uvwiA=w433-h737-s-no-gm?authuser=0" 
+                            alt="ผศ. ดร.ฐิติชัย รักบำรุง"
+                        >
                     </div>
                     <div>
                         <span class="mentor-badge">อาจารย์นิเทศก์</span>
@@ -1386,7 +930,10 @@
 
                 <div class="mentor-card">
                     <div class="mentor-photo">
-                        <img src="https://lh3.googleusercontent.com/pw/AP1GczNiFia2pwq59iokKUVMSDAJUwNr9g93FGwSsQlVfzWC08yQ2jCXyqYBEecGV0IQH4IOqWaJM9fr6B5EhHvMPtzbJNFyTYu7D-5jxl3ycJjrw62Iy13Yu9UwwOm2FwNosJvOV-yKXUXBLjLMnaCGdHMlJg=w518-h518-s-no-gm?authuser=0" alt="ผศ. ดร.นคร ละลอกน้ำ">
+                        <img 
+                            src="https://lh3.googleusercontent.com/pw/AP1GczNiFia2pwq59iokKUVMSDAJUwNr9g93FGwSsQlVfzWC08yQ2jCXyqYBEecGV0IQH4IOqWaJM9fr6B5EhHvMPtzbJNFyTYu7D-5jxl3ycJjrw62Iy13Yu9UwwOm2FwNosJvOV-yKXUXBLjLMnaCGdHMlJg=w518-h518-s-no-gm?authuser=0" 
+                            alt="ผศ. ดร.นคร ละลอกน้ำ"
+                        >
                     </div>
                     <div>
                         <span class="mentor-badge">อาจารย์ที่ปรึกษาโครงงาน</span>
@@ -1405,7 +952,10 @@
             <div class="mentors-grid reveal reveal-delay-1">
                 <div class="mentor-card">
                     <div class="mentor-photo" style="border-color: var(--green-dim);">
-                        <img src="https://drive.google.com/thumbnail?id=1OW6op3WoIUhveNr2YpfY9eBOTmAlVyJi&sz=w1000" alt="อนงค์นาฏ ภักดี">
+                        <img 
+                            src="https://drive.google.com/thumbnail?id=1OW6op3WoIUhveNr2YpfY9eBOTmAlVyJi&sz=w1000" 
+                            alt="อนงค์นาฏ ภักดี"
+                        >
                     </div>
                     <div>
                         <span class="mentor-badge company">หัวหน้าทีม / พี่เลี้ยงฝึกงาน</span>
@@ -1420,7 +970,10 @@
 
                 <div class="mentor-card">
                     <div class="mentor-photo" style="border-color: var(--green-dim);">
-                        <img src="https://drive.google.com/thumbnail?id=12w5Qb0eK42NVjcmhbudqWJ-8Tperlh4_&sz=w1000" alt="ชานนท์ ลำมะนาก">
+                        <img 
+                            src="https://drive.google.com/thumbnail?id=12w5Qb0eK42NVjcmhbudqWJ-8Tperlh4_&sz=w1000" 
+                            alt="ชานนท์ ลำมะนาก"
+                        >
                     </div>
                     <div>
                         <span class="mentor-badge company">พี่เลี้ยงการฝึกงาน</span>
@@ -1436,7 +989,9 @@
         </div>
     </section>
 
-    <!-- ===== CONTACT / FOOTER ===== -->
+    <!-- ========================================== -->
+    <!-- 06. FOOTER & CONTACT -->
+    <!-- ========================================== -->
     <footer id="contact">
         <div class="container">
             <div class="contact-grid">
@@ -1494,14 +1049,15 @@
                     <p>Developed for Internship Report — Burapha University.</p>
                 </div>
                 <div class="footer-badge">
-                    <img src="https://lh3.googleusercontent.com/pw/AP1GczPlbvbP9wZteWpNHxjcfYkUrz0yEW071UJcFN_1-wSdZSDkonTPLLKcX5FzfMMwrblVi54sroLBGUYmt6cjD5ixG_LlQJocr082vYCEN21eYKsRjLcso8bJaQr4QcXmO4k8JWvEuxVq-JsbMa0jfw_Dpg=w1920-h635-s-no-gm?authuser=0" alt="Big C">
+                    <!-- 💡 โลโก้ Footer -->
+                    <img src="./logo.png" alt="Big C">
                     <span>Big C Supercenter PCL.</span>
                 </div>
             </div>
         </div>
     </footer>
 
-    <!-- Back to Top -->
+    <!-- Back to Top Button -->
     <button id="back-top" onclick="window.scrollTo({top:0,behavior:'smooth'})">
         <i class="ph-bold ph-caret-up"></i>
     </button>
@@ -1512,6 +1068,9 @@
         <img id="lb-img" src="" alt="">
     </div>
 
+    <!-- ========================================== -->
+    <!-- SCRIPTS -->
+    <!-- ========================================== -->
     <script>
     document.addEventListener('DOMContentLoaded', () => {
 
@@ -1536,14 +1095,8 @@
         window.addEventListener('scroll', () => {
             const sy = window.scrollY;
             const dh = document.body.scrollHeight - window.innerHeight;
-
-            // Navbar
             nav.classList.toggle('scrolled', sy > 60);
-
-            // Progress bar
             scrollBar.style.width = ((sy / dh) * 100) + '%';
-
-            // Back to top
             backTop.classList.toggle('show', sy > 600);
         }, { passive: true });
 
@@ -1556,15 +1109,20 @@
                 }
             });
         }, { threshold: 0.08, rootMargin: '0px 0px -40px 0px' });
-
         document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+
+        // --- Hero slide-down ---
+        setTimeout(() => {
+            document.querySelectorAll('.hero-eyebrow, .hero-title, .hero-meta').forEach(el => {
+                el.style.animationPlayState = 'running';
+            });
+        }, 50);
 
         // --- Lightbox ---
         const lb = document.getElementById('lightbox');
         const lbImg = document.getElementById('lb-img');
         const lbClose = document.getElementById('lb-close');
 
-        // ผูก Event ให้กับคลาส .lightbox-trigger ทั้งหมด
         document.querySelectorAll('.lightbox-trigger').forEach(el => {
             el.addEventListener('click', function() {
                 const img = this.querySelector('img');
