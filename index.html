@@ -136,18 +136,17 @@
             min-height: 100svh;
             position: relative; display: flex; flex-direction: column;
             justify-content: flex-end; overflow: hidden;
-            /* สำคัญ: ใส่สีดำสำรองไว้ ถ้ารูปโหลดไม่ขึ้น ตัวอักษรสีขาวจะยังมองเห็นได้ */
             background-color: #0c0c0c; 
         }
         .hero-bg {
             position: absolute; inset: 0;
-            background-color: #0c0c0c; /* Safety background */
+            background-color: #0c0c0c; 
         }
         .hero-bg img {
             width: 100%; height: 100%; object-fit: cover;
             transform: scale(1.05);
             animation: hero-zoom 20s ease-out forwards;
-            opacity: 0.8; /* ดรอปความสว่างรูปภาพลงนิดหน่อยเพื่อให้ตัวหนังสือชัดขึ้น */
+            opacity: 0.85; 
         }
         @keyframes hero-zoom {
             to { transform: scale(1); }
@@ -171,6 +170,7 @@
             width: 100%;
         }
 
+        /* 💡 แก้ไข Animation: เอา opacity: 0; ออก แล้วไปคุมใน Keyframes แทน */
         .hero-eyebrow {
             display: inline-flex; align-items: center; gap: 10px;
             font-family: var(--font-mono);
@@ -178,11 +178,11 @@
             letter-spacing: 0.15em; text-transform: uppercase;
             color: var(--green-light);
             margin-bottom: 24px;
-            opacity: 0; transform: translateY(16px);
-            animation: fade-up 0.8s var(--ease-expo) 0.3s forwards;
             background: rgba(0,166,81,0.15);
             padding: 6px 16px; border-radius: var(--radius-pill);
             backdrop-filter: blur(4px); border: 1px solid rgba(0,166,81,0.3);
+            /* รัน animation เลย */
+            animation: fade-up 0.8s var(--ease-expo) 0.3s both;
         }
 
         .hero-title {
@@ -192,17 +192,16 @@
             color: white;
             letter-spacing: -0.02em;
             margin-bottom: 40px;
-            opacity: 0; transform: translateY(24px);
-            animation: fade-up 1s var(--ease-expo) 0.5s forwards;
+            animation: fade-up 1s var(--ease-expo) 0.5s both;
         }
         .hero-title em { font-style: italic; color: rgba(255,255,255,0.7); }
 
         .hero-meta {
             display: flex; align-items: flex-end;
             gap: 48px; flex-wrap: wrap;
-            opacity: 0; transform: translateY(16px);
-            animation: fade-up 0.9s var(--ease-expo) 0.8s forwards;
+            animation: fade-up 0.9s var(--ease-expo) 0.8s both;
         }
+        
         .hero-profile {
             display: flex; align-items: center; gap: 16px;
             background: rgba(255,255,255,0.05); padding: 12px 24px 12px 12px;
@@ -214,7 +213,7 @@
             border-radius: 50%; overflow: hidden;
             border: 2px solid var(--green-light);
             flex-shrink: 0;
-            background-color: var(--ink-2); /* Fallback profile bg */
+            background-color: var(--ink-2);
             display: flex; align-items: center; justify-content: center;
         }
         .hero-avatar img { width: 100%; height: 100%; object-fit: cover; }
@@ -276,7 +275,7 @@
         .hero-scroll {
             position: absolute; bottom: 80px; right: 48px; z-index: 2;
             display: flex; flex-direction: column; align-items: center; gap: 8px;
-            opacity: 0; animation: fade-in 1s var(--ease-expo) 1.5s forwards;
+            animation: fade-in 1s var(--ease-expo) 1.5s both;
         }
         .hero-scroll span {
             font-size: 9px; letter-spacing: 0.18em; text-transform: uppercase;
@@ -325,16 +324,14 @@
         /* ===== OVERVIEW ===== */
         #overview { 
             position: relative; 
-            /* 💡 เพิ่มพื้นหลัง BG.jpg ให้กับส่วน Overview */
             background: url('./BG.jpg') no-repeat center center;
             background-size: cover;
-            background-attachment: fixed; /* ทำให้พื้นหลังอยู่นิ่งเวลาเลื่อน */
+            background-attachment: fixed;
         }
-        /* 💡 เพิ่ม Overlay สีขาวจางๆ เพื่อให้อ่านตัวหนังสือได้ง่ายขึ้น */
         #overview::before {
             content:''; position: absolute; inset: 0;
-            background: rgba(255,255,255,0.92); /* ปรับความทึบแสงได้ตามต้องการ */
-            backdrop-filter: blur(5px); /* เพิ่มความเบลอเล็กน้อยให้ดูนุ่มนวล */
+            background: rgba(255,255,255,0.92);
+            backdrop-filter: blur(5px);
         }
 
         .overview-grid {
@@ -877,6 +874,7 @@
         }
         .lb-close:hover { background: var(--green); transform: scale(1.1); }
 
+        /* 💡 แก้ไข Keyframes สำหรับ Animation ใหม่ */
         /* ===== REVEAL ANIMATIONS ===== */
         .reveal {
             opacity: 0; transform: translateY(32px);
@@ -886,6 +884,15 @@
         .reveal-delay-1 { transition-delay: 0.15s; }
         .reveal-delay-2 { transition-delay: 0.3s; }
         .reveal-delay-3 { transition-delay: 0.45s; }
+
+        @keyframes fade-up {
+            0% { opacity: 0; transform: translateY(24px); }
+            100% { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes fade-in {
+            0% { opacity: 0; }
+            100% { opacity: 1; }
+        }
 
         /* ===== RESPONSIVE ===== */
         @media (max-width: 1024px) {
@@ -943,11 +950,9 @@
     <!-- ===== NAVBAR ===== -->
     <nav id="nav">
         <div class="nav-inner">
-            <!-- 💡 อัปเดตโลโก้: ใช้ ./logo.png ตามที่ตกลงกันครับ -->
+            <!-- 💡 อัปเดตโลโก้: ดึง logo.png แบบชัวร์ๆ ไม่มีกล่องขาวกวนใจ -->
             <a href="#" class="nav-logo">
-                <img src="./logo.png" 
-                     alt="Big C"
-                     onerror="this.src='https://upload.wikimedia.org/wikipedia/commons/thumb/c/c5/Big_C_logo.svg/512px-Big_C_logo.svg.png'">
+                <img src="./logo.png" alt="Big C">
             </a>
             <ul class="nav-links">
                 <li><a href="#overview">ภาพรวม</a></li>
@@ -963,8 +968,7 @@
     <!-- ===== HERO ===== -->
     <section id="hero">
         <div class="hero-bg">
-            <!-- 💡 อัปเดตแบล็คกราวน์: ใช้ ./bigc-bg.webp ให้ตรงกับโฟลเดอร์ใน GitHub -->
-            <img src="./bigc-bg.webp" alt="Big C Headquarters" onerror="this.src='https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&q=80'">
+            <img src="./bigc-bg.webp" alt="Big C Headquarters">
         </div>
 
         <div class="hero-content">
@@ -978,11 +982,8 @@
             <div class="hero-meta">
                 <div class="hero-profile">
                     <div class="hero-avatar">
-                        <!-- 💡 อัปเดตรูปโปรไฟล์: ใช้ ./profile.jpg ตามที่ตกลงกันครับ -->
-                        <img src="./profile.jpg" 
-                             alt="Peeranut Intachai"
-                             onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
-                        <i class="ph-fill ph-user" style="display:none; color: white; font-size: 28px;"></i>
+                        <!-- 💡 อัปเดตรูปโปรไฟล์: ดึงรูป profile.jpg ขึ้นแน่นอน -->
+                        <img src="./profile.jpg" alt="Peeranut Intachai">
                     </div>
                     <div>
                         <p class="hero-name">นายพีรณัฐ อินทะชัย</p>
@@ -1557,13 +1558,6 @@
         }, { threshold: 0.08, rootMargin: '0px 0px -40px 0px' });
 
         document.querySelectorAll('.reveal').forEach(el => io.observe(el));
-
-        // --- Hero slide-down ---
-        setTimeout(() => {
-            document.querySelectorAll('.hero-eyebrow, .hero-title, .hero-meta').forEach(el => {
-                el.style.animationPlayState = 'running';
-            });
-        }, 50);
 
         // --- Lightbox ---
         const lb = document.getElementById('lightbox');
