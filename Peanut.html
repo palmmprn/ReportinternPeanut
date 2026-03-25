@@ -1,0 +1,600 @@
+<!DOCTYPE html>
+<html lang="th" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>รายงานผลการฝึกงาน | Peeranut Intachai</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts: Inter & IBM Plex Sans Thai (Premium Corporate Vibe) -->
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Thai:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Phosphor Icons -->
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'IBM Plex Sans Thai', 'sans-serif'],
+                    },
+                    colors: {
+                        zinc: {
+                            50: '#fafafa', 100: '#f4f4f5', 200: '#e4e4e7', 300: '#d4d4d8', 400: '#a1a1aa',
+                            500: '#71717a', 600: '#52525b', 700: '#3f3f46', 800: '#27272a', 900: '#18181b',
+                        },
+                        brand: {
+                            500: '#00A651', // Big C Green Accent
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        body { background-color: #ffffff; color: #18181b; }
+        
+        /* Smooth Reveal Animation (Scroll up from bottom) */
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 1s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Slide-down Animation for Hero Section */
+        .slide-down {
+            opacity: 0;
+            transform: translateY(-40px);
+            transition: opacity 1.2s ease-out, transform 1.2s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .slide-down.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Dynamic Navbar Styling */
+        #navbar {
+            color: #ffffff;
+        }
+        #navbar .nav-link {
+            color: rgba(255, 255, 255, 0.8);
+        }
+        #navbar .nav-link:hover {
+            color: #ffffff;
+        }
+        
+        .nav-scrolled {
+            background: rgba(255, 255, 255, 0.98) !important;
+            border-bottom: 1px solid #f4f4f5;
+            color: #18181b !important;
+        }
+        .nav-scrolled .nav-link {
+            color: #52525b !important;
+        }
+        .nav-scrolled .nav-link:hover {
+            color: #00A651 !important;
+        }
+
+        ::selection {
+            background-color: #18181b;
+            color: #ffffff;
+        }
+
+        /* Subtle grid line for editorial feel */
+        .editorial-line {
+            border-top: 1px solid #e4e4e7;
+        }
+
+        /* Feature: Infinite Marquee for Tech Stack */
+        .mask-edges {
+            -webkit-mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
+            mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
+        }
+        @keyframes marquee {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-50%); }
+        }
+        .animate-marquee {
+            display: flex;
+            width: max-content;
+            animation: marquee 25s linear infinite;
+        }
+        .animate-marquee:hover {
+            animation-play-state: paused;
+        }
+
+        /* Image hover zoom cursor */
+        .cursor-zoom {
+            cursor: zoom-in;
+        }
+    </style>
+</head>
+<body class="antialiased font-sans relative">
+
+    <!-- Feature 1: Scroll Progress Bar -->
+    <div id="scroll-progress" class="fixed top-0 left-0 h-1 bg-brand-500 z-[60] w-0 transition-all duration-150 rounded-r-full"></div>
+
+    <!-- Dynamic Navigation -->
+    <nav id="navbar" class="fixed w-full z-50 transition-all duration-500 bg-transparent py-6">
+        <div class="max-w-[90rem] mx-auto px-6 lg:px-12">
+            <div class="flex justify-between items-center h-12">
+                <!-- Logo -->
+                <div class="flex-shrink-0 flex items-center cursor-pointer">
+                    <img src="https://lh3.googleusercontent.com/pw/AP1GczPlbvbP9wZteWpNHxjcfYkUrz0yEW071UJcFN_1-wSdZSDkonTPLLKcX5FzfMMwrblVi54sroLBGUYmt6cjD5ixG_LlQJocr082vYCEN21eYKsRjLcso8bJaQr4QcXmO4k8JWvEuxVq-JsbMa0jfw_Dpg=w1920-h635-s-no-gm?authuser=0" alt="Big C Logo" class="h-7 md:h-9 object-contain drop-shadow-md bg-white/10 px-2 py-1 rounded">
+                </div>
+                
+                <!-- Desktop Menu -->
+                <div class="hidden md:flex space-x-12 items-center">
+                    <a href="#overview" class="nav-link transition-colors text-sm font-medium tracking-wide">ภาพรวม</a>
+                    <a href="#responsibilities" class="nav-link transition-colors text-sm font-medium tracking-wide">ความรับผิดชอบ</a>
+                    <a href="#projects" class="nav-link transition-colors text-sm font-medium tracking-wide">โครงงาน</a>
+                    <a href="#mentors" class="nav-link transition-colors text-sm font-medium tracking-wide">ผู้ดูแล</a>
+                </div>
+
+                <!-- Action Button -->
+                <div class="hidden md:block">
+                    <a href="#contact" class="nav-link text-sm font-semibold tracking-wide transition-all">ติดต่อผู้จัดทำ &rarr;</a>
+                </div>
+
+                <!-- Mobile Menu Button -->
+                <div class="md:hidden">
+                    <i class="ph-light ph-list text-2xl nav-link"></i>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section (Corporate Background + Slide-down Text) -->
+    <section id="hero" class="relative min-h-screen flex items-center justify-center overflow-hidden">
+        
+        <!-- Full Screen Background Image -->
+        <div class="absolute inset-0 z-0">
+            <!-- 💡 เรียกใช้ไฟล์รูปตึก Big C ที่อยู่ในโฟลเดอร์เดียวกันกับไฟล์ HTML -->
+            <img src="News-T-BigC-รูป-4.webp" alt="Big C Headquarters" class="w-full h-full object-cover">
+            
+            <!-- Dark Gradient Overlay เพื่อให้อ่านตัวหนังสือสีขาวได้ชัดเจน -->
+            <div class="absolute inset-0 bg-gradient-to-b from-zinc-900/80 via-zinc-900/50 to-zinc-50"></div>
+        </div>
+        
+        <!-- Center Typography Focus (Slide Down Elements) -->
+        <div class="relative z-10 w-full max-w-5xl mx-auto px-6 text-center pt-20">
+            
+            <div class="slide-down" style="transition-delay: 100ms;">
+                <p class="text-brand-500 bg-brand-500/10 border border-brand-500/30 backdrop-blur-md px-4 py-1.5 rounded-full inline-block font-semibold tracking-[0.2em] uppercase text-xs md:text-sm mb-8 shadow-sm">
+                    Internship Report &mdash; 2026
+                </p>
+            </div>
+            
+            <div class="slide-down" style="transition-delay: 300ms;">
+                <h1 class="text-5xl md:text-7xl lg:text-8xl font-bold text-white mb-6 leading-tight tracking-tight drop-shadow-xl">
+                    ระบบบริหารจัดการข้อมูล<br>
+                    ฝ่าย Recruitment
+                </h1>
+            </div>
+            
+            <div class="slide-down" style="transition-delay: 500ms;">
+                <p class="text-xl md:text-2xl text-zinc-200 font-medium mb-12 drop-shadow-md">
+                    บริษัท บิ๊กซี ซูเปอร์เซ็นเตอร์ จำกัด (มหาชน)
+                </p>
+                
+                <!-- Profile Block in Hero -->
+                <div class="inline-flex flex-col sm:flex-row items-center gap-6 bg-white/10 backdrop-blur-md border border-white/20 rounded-3xl p-6 md:p-8 mb-12 text-left shadow-2xl">
+                    <div class="w-20 h-20 rounded-full overflow-hidden border-2 border-white/50 flex-shrink-0">
+                        <img src="https://drive.google.com/thumbnail?id=1fpfvH-1uK_GbkqyYr9078M50Cmw1NBOf&sz=w500" alt="Peeranut" class="w-full h-full object-cover">
+                    </div>
+                    <div>
+                        <p class="text-white font-bold text-xl mb-1">นายพีรณัฐ อินทะชัย</p>
+                        <p class="text-brand-400 font-medium text-sm mb-1">Developer Intern</p>
+                        <p class="text-zinc-300 text-xs leading-relaxed max-w-sm">
+                            สาขาวิชาเทคโนโลยีดิจิทัลเพื่อการฝึกอบรมทรัพยากรมนุษย์ในองค์กร<br>มหาวิทยาลัยบูรพา
+                        </p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="slide-down flex flex-wrap items-center justify-center gap-6" style="transition-delay: 700ms;">
+                <!-- รอใส่ลิงก์ระบบ -->
+                <a href="#" class="inline-flex items-center gap-3 bg-brand-500 text-white px-8 py-4 rounded-xl text-sm font-bold hover:bg-brand-600 transition-all shadow-lg hover:-translate-y-1">
+                    ทดลองใช้งานระบบจริง <i class="ph-bold ph-arrow-right text-lg"></i>
+                </a>
+                <a href="#overview" class="inline-flex items-center gap-3 bg-white/10 backdrop-blur-sm border border-white/20 text-white px-8 py-4 rounded-xl text-sm font-bold hover:bg-white hover:text-zinc-900 transition-all shadow-lg hover:-translate-y-1">
+                    อ่านรายงานโครงงาน
+                </a>
+            </div>
+            
+        </div>
+
+    </section>
+
+    <!-- Overview Section -->
+    <section id="overview" class="py-32 bg-zinc-50 editorial-line">
+        <div class="max-w-[90rem] mx-auto px-6 lg:px-12">
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-16 items-start">
+                
+                <!-- Left Title -->
+                <div class="lg:col-span-4 reveal">
+                    <h2 class="text-xs font-bold tracking-widest text-zinc-400 uppercase mb-4">01 &mdash; Overview</h2>
+                    <h3 class="text-3xl md:text-4xl font-bold text-zinc-900 leading-tight">ภาพรวม<br>การฝึกประสบการณ์</h3>
+                </div>
+
+                <!-- Right Content -->
+                <div class="lg:col-span-8 reveal">
+                    <div class="space-y-6 text-zinc-600 font-light leading-relaxed text-lg mb-16 max-w-3xl">
+                        <p>
+                            [ รอข้อมูลจากปาล์ม: ส่วนนี้จะใช้เขียนเกริ่นนำว่าได้เรียนรู้วัฒนธรรมองค์กรอย่างไรบ้าง หรือสภาพแวดล้อมการทำงานเป็นอย่างไร สามารถเพิ่มลดข้อความได้ตามต้องการในไฟล์โค้ด ]
+                        </p>
+                        <p>
+                            [ รอข้อมูล: อธิบายเพิ่มเติมเกี่ยวกับเป้าหมายหลักของการฝึกงานครั้งนี้ หรือสิ่งที่คาดหวังว่าจะได้รับ ]
+                        </p>
+                    </div>
+
+                    <!-- Clean Corporate Quote -->
+                    <div class="max-w-3xl">
+                        <p class="text-2xl md:text-3xl text-zinc-900 font-light leading-snug mb-8 relative">
+                            <span class="absolute -left-8 -top-4 text-5xl text-zinc-200 font-serif">"</span>
+                            The only thing standing between you and your goal is the story you keep telling yourself as to why you can't achieve it. Difficult doesn't mean impossible. It simply means that you have to work hard.
+                        </p>
+                        <p class="text-xs font-bold tracking-widest uppercase text-zinc-400">&mdash; Jordan Belfort</p>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Responsibilities Section -->
+    <section id="responsibilities" class="py-32 bg-white editorial-line">
+        <div class="max-w-[90rem] mx-auto px-6 lg:px-12">
+            <div class="mb-24 reveal">
+                <h2 class="text-xs font-bold tracking-widest text-zinc-400 uppercase mb-4">02 &mdash; Responsibilities</h2>
+                <h3 class="text-3xl md:text-4xl font-bold text-zinc-900 leading-tight mb-6">บทบาทและหน้าที่<br>ความรับผิดชอบ</h3>
+                <p class="text-zinc-500 max-w-md font-light text-sm">สรุปภาระงานหลักที่ได้รับผิดชอบตลอดระยะเวลาการฝึกประสบการณ์วิชาชีพ ณ บิ๊กซี ซูเปอร์เซ็นเตอร์</p>
+            </div>
+
+            <!-- Minimal List Layout -->
+            <div class="border-t border-zinc-200">
+                
+                <!-- Item 1 -->
+                <div class="grid grid-cols-1 md:grid-cols-12 gap-6 md:gap-16 py-12 border-b border-zinc-200 reveal hover:bg-zinc-50 transition-colors">
+                    <div class="md:col-span-1 text-zinc-300 font-light text-2xl">01</div>
+                    <div class="md:col-span-4">
+                        <h4 class="text-xl font-bold text-zinc-900 mb-2">[ รอข้อมูลงานหลักที่ 1 ]</h4>
+                    </div>
+                    <div class="md:col-span-7">
+                        <p class="text-zinc-500 font-light leading-relaxed max-w-2xl">รายละเอียดของงานที่ได้รับมอบหมาย เทคนิคที่ใช้ หรือปัญหาที่ได้แก้ไขระหว่างปฏิบัติงาน...</p>
+                    </div>
+                </div>
+
+                <!-- Item 2 -->
+                <div class="grid grid-cols-1 md:grid-cols-12 gap-6 md:gap-16 py-12 border-b border-zinc-200 reveal hover:bg-zinc-50 transition-colors">
+                    <div class="md:col-span-1 text-zinc-300 font-light text-2xl">02</div>
+                    <div class="md:col-span-4">
+                        <h4 class="text-xl font-bold text-zinc-900 mb-2">[ รอข้อมูลงานหลักที่ 2 ]</h4>
+                    </div>
+                    <div class="md:col-span-7">
+                        <p class="text-zinc-500 font-light leading-relaxed max-w-2xl">รายละเอียดของงานที่ได้รับมอบหมาย เทคนิคที่ใช้ หรือปัญหาที่ได้แก้ไขระหว่างปฏิบัติงาน...</p>
+                    </div>
+                </div>
+
+                <!-- Item 3 -->
+                <div class="grid grid-cols-1 md:grid-cols-12 gap-6 md:gap-16 py-12 border-b border-zinc-200 reveal hover:bg-zinc-50 transition-colors">
+                    <div class="md:col-span-1 text-zinc-300 font-light text-2xl">03</div>
+                    <div class="md:col-span-4">
+                        <h4 class="text-xl font-bold text-zinc-900 mb-2">[ รอข้อมูลงานหลักที่ 3 ]</h4>
+                    </div>
+                    <div class="md:col-span-7">
+                        <p class="text-zinc-500 font-light leading-relaxed max-w-2xl">รายละเอียดของงานที่ได้รับมอบหมาย เทคนิคที่ใช้ หรือปัญหาที่ได้แก้ไขระหว่างปฏิบัติงาน...</p>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Projects Section -->
+    <section id="projects" class="py-32 bg-zinc-50 editorial-line">
+        <div class="max-w-[90rem] mx-auto px-6 lg:px-12">
+            <div class="mb-20 reveal text-center">
+                <h2 class="text-xs font-bold tracking-widest text-zinc-400 uppercase mb-4">03 &mdash; System Development</h2>
+                <h3 class="text-3xl md:text-4xl font-bold text-zinc-900">ผลงานการพัฒนาระบบ</h3>
+            </div>
+
+            <!-- Project Presentation -->
+            <div class="reveal">
+                <!-- Feature 3: Image Full Width with Lightbox Zoom -->
+                <div class="w-full aspect-[16/9] md:aspect-[21/9] bg-zinc-100 mb-12 relative overflow-hidden group shadow-md border border-zinc-200">
+                    <!-- 💡 รอปาล์มเอาลิงก์ภาพ Screenshot ระบบมาใส่ -->
+                    <!-- ใส่ id="project-image" และ class="cursor-zoom" เพื่อเรียกใช้ Lightbox -->
+                    <img id="project-image" src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=1200&auto=format&fit=crop" alt="System Preview" class="absolute inset-0 w-full h-full object-cover opacity-90 group-hover:scale-[1.02] transition-transform duration-700 cursor-zoom">
+                    
+                    <div class="absolute inset-0 flex items-center justify-center pointer-events-none opacity-100 group-hover:opacity-0 transition-opacity duration-300">
+                        <div class="bg-white/95 text-zinc-900 px-6 py-3 text-sm font-medium shadow-sm flex items-center gap-2 rounded-full border border-zinc-100">
+                            <i class="ph-light ph-magnifying-glass-plus text-brand-500 text-lg"></i> คลิกเพื่อขยายภาพ
+                        </div>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
+                    <div class="lg:col-span-5">
+                        <p class="text-xs font-bold text-zinc-400 uppercase tracking-widest mb-3">Project Name</p>
+                        <h4 class="text-2xl md:text-3xl font-bold text-zinc-900 mb-6 leading-tight">
+                            ระบบบริหารจัดการข้อมูล ฝ่าย Recruitment
+                        </h4>
+                        
+                        <a href="#" class="inline-flex items-center gap-3 text-zinc-900 text-sm font-semibold hover:text-brand-600 transition-colors group">
+                            ทดลองใช้งานระบบ <i class="ph-light ph-arrow-right text-lg group-hover:translate-x-1 transition-transform"></i>
+                        </a>
+                    </div>
+                    
+                    <div class="lg:col-span-7 overflow-hidden">
+                        <p class="text-zinc-600 font-light leading-relaxed text-lg mb-10 max-w-2xl">
+                            (รอข้อมูลจากปาล์ม: ระบุรายละเอียดสั้นๆ ว่าระบบนี้สร้างขึ้นมาเพื่อแก้ปัญหาอะไร มีฟีเจอร์หลักอะไรบ้าง และช่วยลดเวลาการทำงานของฝ่ายบุคคลได้อย่างไรบ้าง)
+                        </p>
+                        
+                        <!-- Feature 2: Infinite Marquee Tech Stack -->
+                        <div class="border-t border-zinc-200 pt-8">
+                            <p class="text-xs font-bold tracking-widest text-zinc-400 uppercase mb-6">Tools & Technology</p>
+                            
+                            <div class="relative flex overflow-hidden w-full mask-edges">
+                                <div class="animate-marquee whitespace-nowrap flex gap-12 py-2">
+                                    <!-- Set 1 -->
+                                    <span class="flex items-center gap-2 text-zinc-800 font-medium"><i class="ph-light ph-code text-zinc-500 text-xl"></i> VS Code</span>
+                                    <span class="flex items-center gap-2 text-zinc-800 font-medium"><i class="ph-light ph-database text-zinc-500 text-xl"></i> phpMyAdmin</span>
+                                    <span class="flex items-center gap-2 text-zinc-800 font-medium"><i class="ph-light ph-cloud-arrow-up text-zinc-500 text-xl"></i> BybHost</span>
+                                    <span class="flex items-center gap-2 text-zinc-800 font-medium"><i class="ph-light ph-plugs-connected text-zinc-500 text-xl"></i> Google API Studio</span>
+                                    <span class="flex items-center gap-2 text-zinc-800 font-medium"><i class="ph-light ph-sparkle text-zinc-500 text-xl"></i> Claude Cowork AI</span>
+                                    <span class="flex items-center gap-2 text-zinc-800 font-medium"><i class="ph-light ph-magic-wand text-zinc-500 text-xl"></i> Google Gemini</span>
+                                    
+                                    <!-- Set 2 (Duplicate for infinite loop effect) -->
+                                    <span class="flex items-center gap-2 text-zinc-800 font-medium ml-12"><i class="ph-light ph-code text-zinc-500 text-xl"></i> VS Code</span>
+                                    <span class="flex items-center gap-2 text-zinc-800 font-medium"><i class="ph-light ph-database text-zinc-500 text-xl"></i> phpMyAdmin</span>
+                                    <span class="flex items-center gap-2 text-zinc-800 font-medium"><i class="ph-light ph-cloud-arrow-up text-zinc-500 text-xl"></i> BybHost</span>
+                                    <span class="flex items-center gap-2 text-zinc-800 font-medium"><i class="ph-light ph-plugs-connected text-zinc-500 text-xl"></i> Google API Studio</span>
+                                    <span class="flex items-center gap-2 text-zinc-800 font-medium"><i class="ph-light ph-sparkle text-zinc-500 text-xl"></i> Claude Cowork AI</span>
+                                    <span class="flex items-center gap-2 text-zinc-800 font-medium"><i class="ph-light ph-magic-wand text-zinc-500 text-xl"></i> Google Gemini</span>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Mentors Section -->
+    <section id="mentors" class="py-32 bg-white editorial-line">
+        <div class="max-w-[90rem] mx-auto px-6 lg:px-12">
+            <div class="mb-24 reveal">
+                <h2 class="text-xs font-bold tracking-widest text-zinc-400 uppercase mb-4">04 &mdash; Mentorship</h2>
+                <h3 class="text-3xl md:text-4xl font-bold text-zinc-900">ภายใต้การดูแลและให้คำปรึกษา</h3>
+            </div>
+
+            <!-- University Section -->
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-x-16 gap-y-16 mb-24 reveal">
+                <!-- Advisor 1 -->
+                <div class="flex flex-col sm:flex-row items-start gap-8">
+                    <div class="w-32 h-32 bg-zinc-100 flex-shrink-0 border border-zinc-200">
+                        <img src="https://lh3.googleusercontent.com/pw/AP1GczNWeXeniWGbmCG1sIJZBoiAG3HPK7gAFoAPa0w9Gnsv3Nr6txsMGzFycVF3ipnxDN3-YnC9uN6R-mQBUkvmaYmM_KsXYrAbOH8-f1l3wSbGMY8ONIXjORs_16Ew_vOII1TJB_OEoc1vFO1iLiAD0uvwiA=w433-h737-s-no-gm?authuser=0" alt="Advisor" class="w-full h-full object-cover object-top">
+                    </div>
+                    <div>
+                        <p class="text-xs font-bold tracking-widest text-zinc-400 uppercase mb-2">อาจารย์นิเทศก์</p>
+                        <h4 class="text-xl font-bold text-zinc-900 mb-1">ผศ. ดร.ฐิติชัย รักบำรุง</h4>
+                        <p class="text-sm font-medium text-zinc-500 mb-3">Asst. Prof. Thitichai Ruckbumrung</p>
+                        <p class="text-sm text-zinc-600 leading-relaxed">
+                            ปร.ด. (เทคโนโลยีการศึกษา)<br>
+                            ภาควิชานวัตกรรมและเทคโนโลยีการศึกษา<br>คณะศึกษาศาสตร์ มหาวิทยาลัยบูรพา
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Advisor 2 -->
+                <div class="flex flex-col sm:flex-row items-start gap-8">
+                    <div class="w-32 h-32 bg-zinc-100 flex-shrink-0 border border-zinc-200">
+                        <img src="https://lh3.googleusercontent.com/pw/AP1GczNiFia2pwq59iokKUVMSDAJUwNr9g93FGwSsQlVfzWC08yQ2jCXyqYBEecGV0IQH4IOqWaJM9fr6B5EhHvMPtzbJNFyTYu7D-5jxl3ycJjrw62Iy13Yu9UwwOm2FwNosJvOV-yKXUXBLjLMnaCGdHMlJg=w518-h518-s-no-gm?authuser=0" alt="Project Advisor" class="w-full h-full object-cover object-top">
+                    </div>
+                    <div>
+                        <p class="text-xs font-bold tracking-widest text-zinc-400 uppercase mb-2">อาจารย์ที่ปรึกษาโครงงาน</p>
+                        <h4 class="text-xl font-bold text-zinc-900 mb-1">ผศ. ดร.นคร ละลอกน้ำ</h4>
+                        <p class="text-sm font-medium text-zinc-500 mb-3">Asst. Prof. Nakhon Lalognum</p>
+                        <p class="text-sm text-zinc-600 leading-relaxed mb-2">ปร.ด. (เทคโนโลยีการศึกษา)</p>
+                        <a href="mailto:nakhon@go.buu.ac.th" class="text-sm font-semibold text-zinc-900 hover:text-brand-500 transition-colors">nakhon@go.buu.ac.th</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Company Section -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-16 reveal">
+                <!-- Mentor 1 -->
+                <div class="flex flex-col sm:flex-row items-start gap-8">
+                    <div class="w-32 h-32 bg-zinc-100 flex-shrink-0 border border-zinc-200">
+                        <img src="https://drive.google.com/thumbnail?id=1OW6op3WoIUhveNr2YpfY9eBOTmAlVyJi&sz=w1000" alt="Mentor Beauty" class="w-full h-full object-cover object-top">
+                    </div>
+                    <div>
+                        <p class="text-xs font-bold tracking-widest text-brand-600 uppercase mb-2">พี่เลี้ยงการฝึกงาน (Big C)</p>
+                        <h4 class="text-xl font-bold text-zinc-900 mb-1">อนงค์นาฏ ภักดี (คุณบิวตี้)</h4>
+                        <p class="text-sm font-medium text-zinc-600 mb-3">Assist Manager, GHR</p>
+                        <div class="flex flex-col gap-1 text-sm font-medium">
+                            <a href="tel:0800735466" class="text-zinc-900 hover:text-brand-500 transition-colors">080-073-5466</a>
+                            <a href="mailto:Anongnat.Pha@bjc.co.th" class="text-zinc-900 hover:text-brand-500 transition-colors">Anongnat.Pha@bjc.co.th</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Mentor 2 -->
+                <div class="flex flex-col sm:flex-row items-start gap-8">
+                    <div class="w-32 h-32 bg-zinc-100 flex-shrink-0 border border-zinc-200">
+                        <img src="https://drive.google.com/thumbnail?id=12w5Qb0eK42NVjcmhbudqWJ-8Tperlh4_&sz=w1000" alt="Mentor Lookmee" class="w-full h-full object-cover object-top">
+                    </div>
+                    <div>
+                        <p class="text-xs font-bold tracking-widest text-brand-600 uppercase mb-2">พี่เลี้ยงการฝึกงาน (Big C)</p>
+                        <h4 class="text-xl font-bold text-zinc-900 mb-1">ชานนท์ ลำมะนาก (คุณลูกหมี)</h4>
+                        <p class="text-sm font-medium text-zinc-600 mb-3">HR Officer</p>
+                        <div class="flex flex-col gap-1 text-sm font-medium">
+                            <a href="tel:0894983005" class="text-zinc-900 hover:text-brand-500 transition-colors">089-498-3005</a>
+                            <a href="mailto:chanon.lam@bigc.co.th" class="text-zinc-900 hover:text-brand-500 transition-colors">chanon.lam@bigc.co.th</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- Footer / Contact -->
+    <footer id="contact" class="bg-zinc-50 py-32 editorial-line">
+        <div class="max-w-[90rem] mx-auto px-6 lg:px-12 reveal flex flex-col md:flex-row justify-between items-start md:items-center gap-12">
+            
+            <!-- Left Info -->
+            <div class="max-w-md">
+                <h3 class="text-4xl font-bold text-zinc-900 mb-6">Contact</h3>
+                <p class="text-zinc-600 leading-relaxed mb-6">
+                    หากมีข้อสงสัยหรือต้องการข้อมูลเพิ่มเติมเกี่ยวกับระบบบริหารจัดการข้อมูล และรายงานผลการฝึกงาน สามารถติดต่อได้ตามช่องทางด้านล่างครับ
+                </p>
+                <div class="text-zinc-900 font-medium space-y-2 text-sm">
+                    <p>Phone: 065-305-9895</p>
+                    <p>Email: peeranat477@gmail.com, 67540065@go.buu.ac.th</p>
+                    <p>Line ID: palmmy23258</p>
+                </div>
+            </div>
+            
+            <!-- Right Icons -->
+            <div class="flex flex-col items-start md:items-end gap-8 w-full md:w-auto">
+                <div class="flex items-center gap-6 md:gap-8 text-zinc-900">
+                    <a href="https://www.instagram.com/sleepyenergy.prn_?igsh=bDhxM2Q2Z202bGp1&utm_source=qr" target="_blank" class="hover:text-zinc-400 transition-colors">
+                        <i class="ph-bold ph-instagram-logo text-2xl md:text-3xl"></i>
+                    </a>
+                    <a href="https://www.facebook.com/share/1Cepx5pZ1q/?mibextid=wwXIfr" target="_blank" class="hover:text-zinc-400 transition-colors">
+                        <i class="ph-bold ph-facebook-logo text-2xl md:text-3xl"></i>
+                    </a>
+                    <a href="https://github.com/palmmprn" target="_blank" class="hover:text-zinc-400 transition-colors">
+                        <i class="ph-bold ph-github-logo text-2xl md:text-3xl"></i>
+                    </a>
+                    <a href="mailto:peeranat477@gmail.com" class="hover:text-zinc-400 transition-colors">
+                        <i class="ph-bold ph-envelope-simple text-2xl md:text-3xl"></i>
+                    </a>
+                </div>
+
+                <div class="text-xs text-zinc-400 uppercase tracking-widest font-semibold text-left md:text-right">
+                    <p>&copy; 2026 PEERANUT INTACHAI.</p>
+                    <p class="mt-1">DEVELOPED FOR INTERNSHIP REPORT.</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Feature 4: Back to Top Button -->
+    <button id="back-to-top" class="fixed bottom-8 right-8 w-12 h-12 bg-zinc-900 text-white rounded-full flex items-center justify-center opacity-0 pointer-events-none transition-all duration-300 hover:bg-brand-500 shadow-lg z-50">
+        <i class="ph-bold ph-arrow-up text-xl"></i>
+    </button>
+
+    <!-- Feature 3: Lightbox Modal for Project Image -->
+    <div id="image-modal" class="fixed inset-0 z-[100] bg-zinc-900/95 backdrop-blur-sm hidden flex-col items-center justify-center opacity-0 transition-opacity duration-300">
+        <button id="close-modal" class="absolute top-6 right-6 text-zinc-400 hover:text-white transition-colors p-2">
+            <i class="ph-light ph-x text-3xl"></i>
+        </button>
+        <img id="modal-img" src="" class="max-w-[90%] max-h-[90vh] object-contain rounded-lg shadow-2xl">
+    </div>
+
+    <!-- JavaScript -->
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            // Elements
+            const nav = document.getElementById('navbar');
+            const scrollProgress = document.getElementById('scroll-progress');
+            const backToTopBtn = document.getElementById('back-to-top');
+            
+            // Modal Elements
+            const modal = document.getElementById('image-modal');
+            const modalImg = document.getElementById('modal-img');
+            const closeBtn = document.getElementById('close-modal');
+            const projectImg = document.getElementById('project-image');
+
+            // Slide Down Animation on Load
+            setTimeout(() => {
+                document.querySelectorAll('.slide-down').forEach(el => el.classList.add('active'));
+            }, 100);
+
+            // Scroll Events for Navbar, Progress Bar, and Back to Top
+            window.addEventListener('scroll', () => {
+                // Navbar style
+                if (window.scrollY > 50) {
+                    nav.classList.add('nav-scrolled');
+                    nav.classList.remove('py-6');
+                    nav.classList.add('py-4');
+                } else {
+                    nav.classList.remove('nav-scrolled');
+                    nav.classList.add('py-6');
+                    nav.classList.remove('py-4');
+                }
+
+                // Scroll Progress Bar
+                const scrollTop = window.scrollY;
+                const docHeight = document.body.scrollHeight - window.innerHeight;
+                const scrollPercent = (scrollTop / docHeight) * 100;
+                scrollProgress.style.width = scrollPercent + "%";
+
+                // Back to top visibility
+                if (scrollTop > 500) {
+                    backToTopBtn.classList.remove('opacity-0', 'pointer-events-none');
+                    backToTopBtn.classList.add('opacity-100', 'pointer-events-auto');
+                } else {
+                    backToTopBtn.classList.add('opacity-0', 'pointer-events-none');
+                    backToTopBtn.classList.remove('opacity-100', 'pointer-events-auto');
+                }
+            });
+
+            // Back to top action
+            backToTopBtn.addEventListener('click', () => {
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            });
+
+            // Reveal Animation on Scroll
+            const revealElements = document.querySelectorAll(".reveal");
+            const revealOptions = { threshold: 0.1, rootMargin: "0px 0px -50px 0px" };
+
+            const revealOnScroll = new IntersectionObserver(function(entries, observer) {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add("active");
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, revealOptions);
+
+            revealElements.forEach(el => revealOnScroll.observe(el));
+
+            // Lightbox Modal Logic
+            if (projectImg) {
+                projectImg.addEventListener('click', () => {
+                    modalImg.src = projectImg.src;
+                    modal.classList.remove('hidden');
+                    modal.classList.add('flex');
+                    // Small delay to allow display:flex to apply before animating opacity
+                    setTimeout(() => {
+                        modal.classList.add('opacity-100');
+                    }, 10);
+                });
+            }
+
+            const closeModal = () => {
+                modal.classList.remove('opacity-100');
+                setTimeout(() => {
+                    modal.classList.add('hidden');
+                    modal.classList.remove('flex');
+                }, 300); // Wait for transition to finish
+            };
+
+            closeBtn.addEventListener('click', closeModal);
+            modal.addEventListener('click', (e) => {
+                if (e.target === modal) closeModal(); // Close if clicked outside image
+            });
+        });
+    </script>
+</body>
+</html>
