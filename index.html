@@ -259,7 +259,21 @@
         .project-title { font-family: var(--font-display); font-size: clamp(42px, 5vw, 64px); font-weight: 500; line-height: 1.1; color: white; letter-spacing: -0.02em; margin-bottom: 0; }
         .project-title em { font-style: italic; color: var(--green-light); }
         .project-layout { display: grid; grid-template-columns: 1fr 1.2fr; gap: 80px; align-items: start; margin-top: 64px; }
-        .project-desc { font-size: 16px; font-weight: 300; color: rgba(255,255,255,0.7); line-height: 1.85; margin-bottom: 40px; }
+        .project-desc { font-size: 16px; font-weight: 300; color: rgba(255,255,255,0.7); line-height: 1.85; margin-bottom: 24px; } /* ลด margin-bottom เล็กน้อยเพื่อให้พื้นที่ปุ่ม */
+        
+        /* ปุ่มโครงสร้างระบบ (เพิ่มใหม่) */
+        .struct-btn {
+            display: inline-flex; align-items: center; gap: 8px;
+            background: rgba(255,255,255,0.05); color: white;
+            padding: 10px 20px; font-size: 14px; font-weight: 500;
+            border-radius: var(--radius-pill); border: 1px solid rgba(255,255,255,0.1);
+            cursor: pointer; transition: all 0.3s;
+        }
+        .struct-btn:hover {
+            background: rgba(0,196,98,0.15); border-color: var(--green-light); color: var(--green-light);
+            transform: translateY(-2px); box-shadow: 0 4px 12px rgba(0,196,98,0.2);
+        }
+
         .feature-box { background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08); padding: 32px; border-radius: var(--radius-lg); margin-bottom: 24px; transition: background 0.3s; }
         .feature-box:hover { background: rgba(255,255,255,0.05); border-color: rgba(255,255,255,0.15); }
         .feature-box h4 { color: white; font-size: 18px; font-weight: 500; margin-bottom: 20px; display: flex; align-items: center; gap: 12px; }
@@ -423,9 +437,10 @@
             .ui-item.full-width { grid-column: 1; }
             .gallery-item, .doc-card { width: 85vw; }
             .activity-header { flex-direction: column; align-items: flex-start; gap: 20px; position: relative; }
-            .gallery-nav { align-self: flex-end; } /* ขยับปุ่มไปขวาในหน้าจอมือถือ */
+            .gallery-nav { align-self: flex-end; }
             .contact-info { padding: 24px; }
             .contact-row { flex-direction: column; gap: 8px; }
+            .system-docs-row { justify-content: center; } /* ให้ปุ่มเรียงกลางในมือถือ */
         }
     </style>
 </head>
@@ -641,6 +656,22 @@
                     <p class="project-desc">
                         กระบวนการทั้งหมดถูกพัฒนาขึ้นเพื่อแก้ปัญหาการจัดเก็บข้อมูลแบบกระจาย (Data Silos) เพิ่มความถูกต้อง ความรวดเร็วในการประมวลผลข้อมูล และสนับสนุนการตัดสินใจของผู้บริหารผ่าน Dashboard ได้อย่างมีประสิทธิภาพ โดยแบ่งการใช้งานเป็น 2 ส่วนหลัก:
                     </p>
+
+                    <!-- โครงสร้างระบบ (เพิ่มปุ่มใหม่ตรงนี้) -->
+                    <div class="system-docs-row reveal reveal-delay-2" style="display: flex; gap: 12px; margin-bottom: 32px; flex-wrap: wrap;">
+                        <div class="struct-btn lightbox-trigger">
+                            <i class="ph-bold ph-flow-arrow"></i> Flowchart
+                            <img src="https://lh3.googleusercontent.com/pw/AP1GczOrM6R-tsKs3wNmq_Mt0n06yopBnE8OKpkesGnngcG90qHM4ILcXdJAigTOGUoqeg14VsXCqRhAMJcZuU6jUYPOLX9_1w5NUetBsohWZsj0SspcHrul7emnBdI5wGLtLOkIOFvl6kH4qcfM3pRLs2HT9w=w435-h1033-s-no-gm?authuser=0" alt="Flowchart" style="display: none;">
+                        </div>
+                        <div class="struct-btn lightbox-trigger">
+                            <i class="ph-bold ph-database"></i> ER Diagram
+                            <img src="https://lh3.googleusercontent.com/pw/AP1GczOtn4N2xxiUc_HcgPB-w-h8r_8ttdF1cl-bItXIMVAdlLJswIfEggPmyrTwHShkmiBDTTegUWgP3Vyt-5MbNu9vjJ7qetzDoc25ja-cZwTT59b9Ilaa3Jgb3QjmqBTuQvoecZfZVVxVQLhvL31hZGHKzA=w1004-h1033-s-no-gm?authuser=0" alt="ER Diagram" style="display: none;">
+                        </div>
+                        <div class="struct-btn lightbox-trigger">
+                            <i class="ph-bold ph-users"></i> Use Case
+                            <img src="https://lh3.googleusercontent.com/pw/AP1GczNqTKdiA25aDbRyHUXF8K_9qsANBNDDInbUWY74u4j8NJ6mTOYh2p7WhdbA-_BqPNKC934sgwebNm8kO_kklZpCKeEJ1XGaaflybN81vKzSPgMntxRwzMo9__tpsuvDY5jtsgHqZgTKEQSXbahqn1Bvaw=w861-h1033-s-no-gm?authuser=0" alt="Use Case Diagram" style="display: none;">
+                        </div>
+                    </div>
 
                     <div class="feature-box">
                         <h4><i class="ph-fill ph-user-circle"></i> ฝั่งผู้ใช้งาน (HR Recruiter)</h4>
@@ -1163,6 +1194,7 @@
         const lbImg = document.getElementById('lb-img');
         const lbClose = document.getElementById('lb-close');
 
+        // อัปเดต Script Lightbox ให้รองรับปุ่มที่มีรูปซ่อนอยู่ด้านในด้วย
         document.querySelectorAll('.lightbox-trigger').forEach(el => {
             el.addEventListener('click', function() {
                 const img = this.querySelector('img');
@@ -1194,7 +1226,7 @@
         });
 
         // ==========================================
-        // 🚀 NEW: Gallery Navigation Script 
+        // 🚀 Gallery Navigation Script 
         // ==========================================
         document.querySelectorAll('.activity-group').forEach(group => {
             const container = group.querySelector('.gallery-container');
